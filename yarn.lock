@@ -668,6 +668,11 @@ core-js-pure@^3.25.1:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.25.5.tgz#79716ba54240c6aa9ceba6eee08cf79471ba184d"
   integrity sha512-oml3M22pHM+igfWHDfdLVq2ShWmjM2V4L+dQEBs0DWVIqEm9WHCwGAlZ6BmyBQGy5sFrJmcx+856D9lVKyGWYg==
 
+craco-alias@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/craco-alias/-/craco-alias-3.0.1.tgz#45e5cb338b222a7f62d17e398b54aff7cf1572af"
+  integrity sha512-N+Qaf/Gr/f3o5ZH2TQjMu5NhR9PnT1ZYsfejpNvZPpB0ujdrhsSr4Ct6GVjnV5ostCVquhTKJpIVBKyL9qDQYA==
+
 cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"

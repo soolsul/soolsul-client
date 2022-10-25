@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { getToken } from "../lib/utils";
+import { getToken } from "@lib/utils";
 import { InterceptorCallbackType } from "./type";
 
 /**
