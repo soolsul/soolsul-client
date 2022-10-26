@@ -1,1 +1,7 @@
-export * as USER from "./users";
+import * as user from "./users";
+
+const apis = {
+  user,
+};
+
+export default apis;

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { getToken } from "@lib/utils";
 import { InterceptorCallbackType } from "./type";
+import { LoginType } from "@lib/types";
 
 /**
  * REST API 관련 클래스
@@ -24,7 +25,7 @@ export class Network {
    * 유저 관련 API
    */
   user = {
-    login: async ({ id, password }: { id: string; password: string }) => {
+    login: async ({ id, password }: LoginType.FormData) => {
       return this._instance.post("/login", { id, password });
     },
   };
