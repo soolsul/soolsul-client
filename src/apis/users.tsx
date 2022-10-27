@@ -1,4 +1,4 @@
-import { LoginType } from "@lib/types";
+import { LoginType } from "@lib/types/user";
 import APIS from "./network";
 
 /**
@@ -6,7 +6,7 @@ import APIS from "./network";
  * @param id 유저 아이디
  * @param password 비밀번호
  */
-export function login(data: LoginType.FormData) {
+export function login(data: LoginType) {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await APIS.user.login(data);
