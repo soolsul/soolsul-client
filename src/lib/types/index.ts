@@ -1,1 +1,1 @@
-export * as LoginType from "./login";
+export * as UserType from "./user";
