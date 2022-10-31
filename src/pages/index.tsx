@@ -5,8 +5,34 @@ const Home: NextPage = () => {
   return (
     <div>
       <button
-        onClick={async () => {
-          console.log("클릭 ", await Property.userInfo.currentPosition());
+        style={{ display: "block" }}
+        onClick={() => {
+          window.navigator.geolocation.getCurrentPosition((position) => {
+            Property.setUserLocation(position);
+          });
+        }}
+      >
+        위치정보 저장하기(currentPosition)
+      </button>
+
+      <button
+        style={{ display: "block" }}
+        onClick={() => {
+          window.navigator.geolocation.watchPosition((position) => {
+            Property.setUserLocation(position);
+          });
+        }}
+      >
+        위치정보 저장하기 (watchPosition)
+      </button>
+
+      <button
+        style={{ display: "block" }}
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            console.log("window.property ", window.property.userInfo.location);
+            console.log("Property", Property.userInfo.location);
+          }
         }}
       >
         위치정보 가져오기
