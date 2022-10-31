@@ -1,19 +1,12 @@
 class Properties {
-  private _currentPosition?: GeolocationPosition;
+  constructor() {}
 
-  constructor() {
-    if (typeof window === "undefined") return;
-    window.navigator.geolocation.getCurrentPosition((position) => {
-      this._currentPosition = position;
-    });
-  }
-
-  private _getCurrentPosition() {
+  private _getCurrentPosition(): Promise<GeolocationPosition> {
     return new Promise((resolve, reject) => {
       try {
-        if (typeof this._currentPosition !== "undefined") {
-          resolve(this._currentPosition);
-        }
+        window.navigator.geolocation.watchPosition((position) => {
+          resolve(position);
+        });
       } catch (err) {
         reject(err);
       }
