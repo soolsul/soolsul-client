@@ -1,15 +1,24 @@
 import Property from "@lib/utils/Properties";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   return (
     <div>
       <button
         style={{ display: "block" }}
         onClick={() => {
-          window.navigator.geolocation.getCurrentPosition((position) => {
-            Property.setUserLocation(position);
-          });
+          if (typeof window !== "undefined") {
+            if (Property.userInfo.location) {
+              router.push("map");
+            } else {
+              window.navigator.geolocation.getCurrentPosition((position) => {
+                Property.setUserLocation(position);
+                router.push("map");
+              });
+            }
+          }
         }}
       >
         위치정보 저장하기(currentPosition)
@@ -18,24 +27,19 @@ const Home: NextPage = () => {
       <button
         style={{ display: "block" }}
         onClick={() => {
-          window.navigator.geolocation.watchPosition((position) => {
-            Property.setUserLocation(position);
-          });
-        }}
-      >
-        위치정보 저장하기 (watchPosition)
-      </button>
-
-      <button
-        style={{ display: "block" }}
-        onClick={() => {
           if (typeof window !== "undefined") {
-            console.log("window.property ", window.property.userInfo.location);
-            console.log("Property", Property.userInfo.location);
+            if (Property.userInfo.location) {
+              router.push("map");
+            } else {
+              window.navigator.geolocation.getCurrentPosition((position) => {
+                Property.setUserLocation(position);
+                router.push("map");
+              });
+            }
           }
         }}
       >
-        위치정보 가져오기
+        위치정보 저장하기 (watchPosition)
       </button>
     </div>
   );

@@ -1,28 +1,31 @@
-declare global {
-  interface Window {
-    property: any;
-  }
-}
-
 class Properties {
-  private _userLocation?: GeolocationPosition;
+  constructor() {
+    if (typeof window === "undefined") return;
+  }
 
-  constructor() {}
-
-  public setUserLocation(newPosition: GeolocationPosition) {
-    this._userLocation = newPosition;
+  public setUserLocation(newGeoLocation: GeolocationPosition) {
+    const { coords, timestamp } = newGeoLocation;
+    const result = {
+      coords: {
+        latitude: coords.latitude,
+        accuracy: coords.accuracy,
+        altitude: coords.altitude,
+        altitudeAccuracy: coords.altitudeAccuracy,
+        heading: coords.heading,
+        longitude: coords.longitude,
+        speed: coords.speed,
+      },
+      timestamp: timestamp,
+    };
+    window.localStorage.setItem("GeoLocation", JSON.stringify(result));
   }
 
   get userInfo() {
-    const location = this._userLocation;
+    const location = JSON.parse(window.localStorage.getItem("GeoLocation") || "null");
     return { location };
   }
 }
 
 const Property = new Properties();
-
-if (typeof window !== "undefined") {
-  window.property = Property;
-}
 
 export default Property;
