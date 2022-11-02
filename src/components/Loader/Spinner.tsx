@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
-const Spinner = () => {
+export function Spinner() {
   return <StyledSpinner />;
-};
-
-export default Spinner;
+}
 
 const StyledSpinner = styled.div`
   margin: 100px auto;
