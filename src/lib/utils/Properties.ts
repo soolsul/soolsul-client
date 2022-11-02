@@ -1,3 +1,8 @@
+/**
+ * [전역 프라퍼티]
+ * 필요한 값을 로컬스토리지에 세팅하는 method와
+ * 필요한 값을 로컬스토리지에서 가져오는 getter로 구성.
+ */
 class Properties {
   constructor() {
     if (typeof window === "undefined") return;
