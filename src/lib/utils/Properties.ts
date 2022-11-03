@@ -8,25 +8,39 @@ class Properties {
     if (typeof window === "undefined") return;
   }
 
+  /**
+   * 로컬스토리지에서 원하는 값을 가져오는 함수
+   *
+   * @param key 로컬스토리지 키
+   */
+  private _getItemFromLocalStorage(key: string) {
+    return window.localStorage.getItem(key) || "null";
+  }
+
+  /**
+   * `JSON.stringify`가 빈객체를 반환할때 사용하는 함수
+   * @param obj 변환할 객체
+   */
+  private _cloneAsObject(obj: Object | Array<any>) {
+    if (obj === null || !(obj instanceof Object)) {
+      return obj;
+    }
+    const result = obj instanceof Array ? [] : {};
+
+    for (const key in obj) {
+      //@ts-ignore
+      result[key] = this._cloneAsObject(obj[key]);
+    }
+
+    return result;
+  }
+
   public setUserLocation(newGeoLocation: GeolocationPosition) {
-    const { coords, timestamp } = newGeoLocation;
-    const result = {
-      coords: {
-        latitude: coords.latitude,
-        accuracy: coords.accuracy,
-        altitude: coords.altitude,
-        altitudeAccuracy: coords.altitudeAccuracy,
-        heading: coords.heading,
-        longitude: coords.longitude,
-        speed: coords.speed,
-      },
-      timestamp: timestamp,
-    };
-    window.localStorage.setItem("GeoLocation", JSON.stringify(result));
+    window.localStorage.setItem("GeoLocation", JSON.stringify(this._cloneAsObject(newGeoLocation)));
   }
 
   get userInfo() {
-    const location = JSON.parse(window.localStorage.getItem("GeoLocation") || "null");
+    const location = JSON.parse(this._getItemFromLocalStorage("GeoLocation"));
     return { location };
   }
 }
