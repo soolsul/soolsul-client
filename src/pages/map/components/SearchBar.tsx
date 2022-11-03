@@ -1,15 +1,24 @@
 import { TextInput } from "@components/Input";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-interface ISearchBarProps {
-  placeholder: string;
-  value: string;
-}
-function SearchBar(props: ISearchBarProps) {
+function SearchBar() {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <Wrapper>
       <LogoBox position="left" />
-      <SearchInput id="search-place" {...props} />
+      <SearchInput
+        id="search-place"
+        value={searchValue}
+        onChange={handleChangeSearchValue}
+        placeholder="장소를 검색해 보세요"
+        alt="장소 검색창"
+      />
       <LogoBox position="right" />
     </Wrapper>
   );
@@ -17,14 +26,13 @@ function SearchBar(props: ISearchBarProps) {
 
 export default SearchBar;
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   position: fixed;
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   width: 90%;
-  max-width: calc(480px * 0.9);
 `;
 
 const SearchInput = styled(TextInput)`

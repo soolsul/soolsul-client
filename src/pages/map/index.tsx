@@ -1,12 +1,13 @@
 import Property from "@lib/utils/Properties";
 import dynamic from "next/dynamic";
+import { useMemo } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { BottomMenu, Error, SearchBar } from "./components";
 
 function MapPage() {
   try {
-    const location: GeolocationPosition = Property.userInfo.location;
+    const location: GeolocationPosition = useMemo(() => Property.userInfo.location, []);
     return (
       <Wrapper>
         <StyledMap
@@ -15,7 +16,7 @@ function MapPage() {
             lng: location.coords.longitude,
           }}
         >
-          <SearchBar placeholder="장소를 검색해 보세요" value="" />
+          <SearchBar />
           <MapMarker
             position={{
               lat: location.coords.latitude,
