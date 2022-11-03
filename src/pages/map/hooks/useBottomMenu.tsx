@@ -23,9 +23,9 @@ function useBottomMenu() {
     setIsActive(false);
     setTransition(500);
     if (menuCoords.direction === "down") {
-      setMenuCoords({ direction: "up", clientYTemp: -999, top: DEFAULT_POSITION });
+      setMenuCoords({ direction: "up", clientYTemp: -9999, top: DEFAULT_POSITION });
     } else {
-      setMenuCoords({ direction: "down", clientYTemp: 999, top: -document.body.scrollHeight / 2 });
+      setMenuCoords({ direction: "down", clientYTemp: 9999, top: -document.body.scrollHeight / 2 });
     }
   }, [menuCoords.direction]);
 
@@ -76,11 +76,11 @@ function useBottomMenu() {
 
   useEffect(() => {
     if (isActive) {
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("touchmove", onTouchMove);
+      Property.userInfo.isWeb && document.addEventListener("mousemove", onMouseMove);
+      Property.userInfo.isMobile && document.addEventListener("touchmove", onTouchMove);
       return () => {
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("touchmove", onTouchMove);
+        Property.userInfo.isWeb && document.removeEventListener("mousemove", onMouseMove);
+        Property.userInfo.isMobile && document.removeEventListener("touchmove", onTouchMove);
       };
     }
   }, [isActive, menuCoords.clientYTemp]);
