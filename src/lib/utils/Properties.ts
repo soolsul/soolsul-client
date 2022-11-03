@@ -1,3 +1,5 @@
+import { DeviceType } from "@lib/types/user";
+
 /**
  * [전역 프라퍼티]
  * 필요한 값을 로컬스토리지에 세팅하는 method와
@@ -41,7 +43,10 @@ class Properties {
 
   get userInfo() {
     const location = JSON.parse(this._getItemFromLocalStorage("GeoLocation"));
-    return { location };
+    const deviceType: DeviceType = /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "web";
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const isWeb = !/Mobi|Android/i.test(navigator.userAgent);
+    return { location, deviceType, isWeb, isMobile };
   }
 }
 
