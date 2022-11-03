@@ -9,7 +9,7 @@ type MenuCoordsType = {
 };
 
 function useBottomMenu() {
-  const DEFAULT_POSITION = -100;
+  const DEFAULT_POSITION = -85;
 
   const [isActive, setIsActive] = useState(false);
   const [transition, setTransition] = useState(0);
