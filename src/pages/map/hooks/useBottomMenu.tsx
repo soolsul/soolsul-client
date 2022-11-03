@@ -1,6 +1,6 @@
 import { UserType } from "@lib/types";
 import Property from "@lib/utils/Properties";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type MenuCoordsType = {
   top: number;
@@ -10,6 +10,7 @@ type MenuCoordsType = {
 
 function useBottomMenu() {
   const DEFAULT_POSITION = -85;
+  const MAX_POSITION = (-document.body.scrollHeight / 10) * 7;
 
   const [isActive, setIsActive] = useState(false);
   const [transition, setTransition] = useState(0);
@@ -19,13 +20,15 @@ function useBottomMenu() {
     direction: "up",
   });
 
+  const isShowShadow = useMemo(() => menuCoords.top === MAX_POSITION, [menuCoords.top]);
+
   const handleEndTouch = useCallback(() => {
     setIsActive(false);
     setTransition(500);
     if (menuCoords.direction === "down") {
       setMenuCoords({ direction: "up", clientYTemp: -9999, top: DEFAULT_POSITION });
     } else {
-      setMenuCoords({ direction: "down", clientYTemp: 9999, top: -document.body.scrollHeight / 2 });
+      setMenuCoords({ direction: "down", clientYTemp: 9999, top: MAX_POSITION });
     }
   }, [menuCoords.direction]);
 
@@ -40,8 +43,8 @@ function useBottomMenu() {
     let top = DEFAULT_POSITION;
     if (position >= DEFAULT_POSITION) {
       top = DEFAULT_POSITION;
-    } else if (position < -document.body.scrollHeight / 2) {
-      top = -document.body.scrollHeight / 2;
+    } else if (position < MAX_POSITION) {
+      top = MAX_POSITION;
     } else {
       top = position;
     }
@@ -85,7 +88,7 @@ function useBottomMenu() {
     }
   }, [isActive, menuCoords.clientYTemp]);
 
-  return { menuCoords, transition, handleStartTouch: onMouseDown };
+  return { menuCoords, transition, handleStartTouch: onMouseDown, isShowShadow };
 }
 
 export default useBottomMenu;

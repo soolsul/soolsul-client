@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 18px 10px;
+  cursor: pointer;
   p {
     margin: 0;
     color: #000;

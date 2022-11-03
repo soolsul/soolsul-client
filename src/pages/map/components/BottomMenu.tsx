@@ -4,18 +4,21 @@ import useBottomMenu from "../hooks/useBottomMenu";
 import Category from "./Category";
 
 function BottomMenu() {
-  const { menuCoords, transition, handleStartTouch } = useBottomMenu();
+  const { menuCoords, transition, handleStartTouch, isShowShadow } = useBottomMenu();
 
   return (
-    <Wrapper top={menuCoords.top} transition={transition}>
-      <Handle onMouseDown={handleStartTouch} onTouchStart={handleStartTouch} />
-      <CategoryWrapper>
-        <Category value="sample1" />
-        <Category value="sample2" />
-        <Category value="sample3" />
-        <Category value="sample4" />
-      </CategoryWrapper>
-    </Wrapper>
+    <>
+      <Wrapper top={menuCoords.top} transition={transition}>
+        <Handle onMouseDown={handleStartTouch} onTouchStart={handleStartTouch} />
+        <CategoryWrapper>
+          <Category value="sample1" />
+          <Category value="sample2" />
+          <Category value="sample3" />
+          <Category value="sample4" />
+        </CategoryWrapper>
+      </Wrapper>
+      <Shadow isShow={isShowShadow} />
+    </>
   );
 }
 
@@ -40,9 +43,9 @@ const Wrapper = styled.div<{ top: number; transition: number }>`
   left: 50%;
   width: 100%;
   border-radius: 6px 6px 0 0;
-  height: 50vh;
+  height: 70vh;
   background-color: #fff;
-  z-index: 2;
+  z-index: 500;
   ${({ top, transition }) => {
     return css`
       top: 100%;
@@ -55,6 +58,15 @@ const Wrapper = styled.div<{ top: number; transition: number }>`
 const CategoryWrapper = styled.div`
   display: flex;
   justify-content: space-around;
-  padding: 18px 0;
   box-shadow: 1px 4px 10px 1px #c4c4c4af;
+`;
+
+const Shadow = styled.div<{ isShow: boolean }>`
+  width: 100%;
+  height: 100vh;
+  background-color: #8080804e;
+  position: absolute;
+  top: 0;
+  z-index: 300;
+  display: ${({ isShow }) => (isShow ? "" : "none")};
 `;
