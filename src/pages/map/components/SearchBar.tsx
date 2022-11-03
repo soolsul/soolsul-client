@@ -23,8 +23,8 @@ const Wrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  width: 80%;
-  max-width: 360px;
+  width: 90%;
+  max-width: calc(480px * 0.9);
 `;
 
 const SearchInput = styled(TextInput)`
