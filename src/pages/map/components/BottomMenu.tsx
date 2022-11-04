@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled, { css } from "styled-components";
 import useBottomMenu from "../hooks/useBottomMenu";
 import Category from "./Category";
 
 function BottomMenu() {
-  const { menuCoords, transition, handleStartTouch, isShowShadow } = useBottomMenu();
+  const menuRef = useRef(null);
+  const { menuCoords, transition, handleStartTouch, isShowShadow } = useBottomMenu(menuRef.current);
 
   return (
     <>
-      <Wrapper top={menuCoords.top} transition={transition}>
+      <Wrapper top={menuCoords.top} transition={transition} ref={menuRef}>
         <Handle onMouseDown={handleStartTouch} onTouchStart={handleStartTouch} />
         <CategoryWrapper>
           <Category value="sample1" />
@@ -40,15 +41,15 @@ const Wrapper = styled.div<{ top: number; transition: number }>`
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 50%;
   width: 100%;
-  border-radius: 6px 6px 0 0;
   height: 70vh;
+  border-radius: 6px 6px 0 0;
   background-color: #fff;
   z-index: 500;
   ${({ top, transition }) => {
     return css`
       top: 100%;
+      left: 50%;
       transform: translate(-50%, ${top}px);
       transition: ${transition}ms;
     `;
@@ -64,7 +65,7 @@ const CategoryWrapper = styled.div`
 const Shadow = styled.div<{ isShow: boolean }>`
   width: 100%;
   height: 100vh;
-  background-color: #8080804e;
+  background-color: #56565690;
   position: absolute;
   top: 0;
   z-index: 300;

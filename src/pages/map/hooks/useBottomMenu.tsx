@@ -8,8 +8,14 @@ type MenuCoordsType = {
   direction: "up" | "down";
 };
 
-function useBottomMenu() {
+function useBottomMenu(ref: HTMLDivElement | null) {
+  /**
+   * 메뉴 시작 위치
+   */
   const DEFAULT_POSITION = -85;
+  /**
+   * 메뉴 최대 높이
+   */
   const MAX_POSITION = (-document.body.scrollHeight / 10) * 7;
 
   const [isActive, setIsActive] = useState(false);
@@ -67,26 +73,52 @@ function useBottomMenu() {
     setPosition(position, e.touches[0].clientY);
   };
 
+  const closeMenu = (e: Event) => {
+    const target = e.target as Node;
+    if (isShowShadow && !ref?.contains(target)) {
+      setMenuCoords({ direction: "up", clientYTemp: -9999, top: DEFAULT_POSITION });
+      setTransition(500);
+    }
+  };
+
+  /**
+   * 클릭 or 터치 끝난 시점 메뉴 위치 조정
+   */
   useEffect(() => {
     if (!isActive) return;
-    Property.userInfo.isWeb && document.addEventListener("mouseup", handleEndTouch);
-    Property.userInfo.isMobile && document.addEventListener("touchend", handleEndTouch);
+    document.addEventListener("mouseup", handleEndTouch);
+    document.addEventListener("touchend", handleEndTouch);
     return () => {
-      Property.userInfo.isWeb && document.removeEventListener("mouseup", handleEndTouch);
-      Property.userInfo.isMobile && document.removeEventListener("touchend", handleEndTouch);
+      document.removeEventListener("mouseup", handleEndTouch);
+      document.removeEventListener("touchend", handleEndTouch);
     };
   }, [handleEndTouch]);
 
+  /**
+   * 메뉴 끌어올리거나 내리기
+   */
   useEffect(() => {
     if (isActive) {
-      Property.userInfo.isWeb && document.addEventListener("mousemove", onMouseMove);
-      Property.userInfo.isMobile && document.addEventListener("touchmove", onTouchMove);
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("touchmove", onTouchMove);
       return () => {
-        Property.userInfo.isWeb && document.removeEventListener("mousemove", onMouseMove);
-        Property.userInfo.isMobile && document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("touchmove", onTouchMove);
       };
     }
   }, [isActive, menuCoords.clientYTemp]);
+
+  /**
+   * 외부 클릭 or 터치 감지해서 메뉴 닫기
+   */
+  useEffect(() => {
+    document.addEventListener("touchstart", closeMenu);
+    document.addEventListener("click", closeMenu);
+    return () => {
+      document.removeEventListener("touchstart", closeMenu);
+      document.removeEventListener("click", closeMenu);
+    };
+  }, [isShowShadow]);
 
   return { menuCoords, transition, handleStartTouch: onMouseDown, isShowShadow };
 }
