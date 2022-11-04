@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-import { BottomMenu, Error, SearchBar } from "./components";
+import { AddFeedButton, BottomMenu, Error, SearchBar } from "./components";
 
 function MapPage() {
   try {
@@ -25,6 +25,7 @@ function MapPage() {
           >
             <div style={{ color: "#000" }}>현위치</div>
           </MapMarker>
+          <AddFeedButton />
           <BottomMenu />
         </StyledMap>
       </Wrapper>
