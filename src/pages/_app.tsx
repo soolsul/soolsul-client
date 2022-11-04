@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <Script
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f16ce2c53cddfe4e24c640dde411dca5&libraries=services,clusterer&autoload=false"
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services,clusterer&autoload=false`}
         strategy="beforeInteractive"
       />
       <Component {...pageProps} />
