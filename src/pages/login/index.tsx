@@ -1,5 +1,5 @@
+import { useLogin } from "@hooks/pages/login";
 import React from "react";
-import useLogin from "./hooks/useLogin";
 
 function Login() {
   const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
