@@ -7,10 +7,12 @@ import APIS from "./network";
  * @param password 비밀번호
  */
 export function login(data: LoginType) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
-      const result = await APIS.user.login(data);
-      resolve(result);
+      (async () => {
+        const result = await APIS.user.login(data);
+        resolve(result);
+      })();
     } catch (error) {
       reject(error);
     }

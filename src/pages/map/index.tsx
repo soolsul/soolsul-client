@@ -1,7 +1,7 @@
 import { AddFeedButton, BottomMenu, Error, SearchBar } from "@components/pages/map";
 import Property from "@lib/utils/Properties";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 

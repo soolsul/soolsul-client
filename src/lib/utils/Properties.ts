@@ -23,14 +23,13 @@ class Properties {
    * `JSON.stringify`가 빈객체를 반환할때 사용하는 함수
    * @param obj 변환할 객체
    */
-  private _cloneAsObject(obj: Object | Array<any>) {
+  private _cloneAsObject(obj: { [key: string]: any }) {
     if (obj === null || !(obj instanceof Object)) {
       return obj;
     }
-    const result = obj instanceof Array ? [] : {};
+    const result = obj instanceof Array ? [] : ({} as { [key: string]: any });
 
     for (const key in obj) {
-      //@ts-ignore
       result[key] = this._cloneAsObject(obj[key]);
     }
 

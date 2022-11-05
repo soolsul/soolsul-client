@@ -1,4 +1,3 @@
-import Property from "@lib/utils/Properties";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

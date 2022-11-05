@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import styled from "styled-components";
 
-function Error(error: any) {
+function Error() {
   const router = useRouter();
   useEffect(() => {
     window.navigator.geolocation.getCurrentPosition((position) => {
