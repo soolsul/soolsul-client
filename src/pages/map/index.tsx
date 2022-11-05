@@ -1,13 +1,13 @@
+import { AddFeedButton, BottomMenu, Error, SearchBar } from "@components/pages/map";
 import Property from "@lib/utils/Properties";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-import { AddFeedButton, BottomMenu, Error, SearchBar } from "./components";
 
 function MapPage() {
   try {
-    const location: GeolocationPosition = useMemo(() => Property.userInfo.location, []);
+    const location: GeolocationPosition = Property.userInfo.location;
     return (
       <Wrapper>
         <StyledMap

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled, { css } from "styled-components";
-import useBottomMenu from "../hooks/useBottomMenu";
+import useBottomMenu from "../../../hooks/pages/map/useBottomMenu";
 import Category from "./Category";
 
 function BottomMenu() {

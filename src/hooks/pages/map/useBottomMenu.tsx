@@ -12,7 +12,7 @@ function useBottomMenu(ref: HTMLDivElement | null) {
   /**
    * 메뉴 시작 위치
    */
-  const DEFAULT_POSITION = -85;
+  const DEFAULT_POSITION = -185;
   /**
    * 메뉴 최대 높이
    */
