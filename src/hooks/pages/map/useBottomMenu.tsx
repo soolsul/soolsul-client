@@ -1,5 +1,3 @@
-import { UserType } from "@lib/types";
-import Property from "@lib/utils/Properties";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type MenuCoordsType = {

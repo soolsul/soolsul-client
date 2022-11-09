@@ -1,13 +1,22 @@
 import { AddFeedButton, BottomMenu, Error, SearchBar } from "@components/pages/map";
 import Property from "@lib/utils/Properties";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 function MapPage() {
-  try {
-    const location: GeolocationPosition = Property.userInfo.location;
+  const [location, setLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
+
+  useEffect(() => {
+    window.navigator.geolocation.watchPosition((position) => {
+      setLocation(position);
+    });
+  }, []);
+
+  if (!location) {
+    return <Error />;
+  } else {
     return (
       <Wrapper>
         <StyledMap
@@ -16,6 +25,9 @@ function MapPage() {
             lng: location.coords.longitude,
           }}
         >
+          <span style={{ position: "fixed", top: "0", zIndex: "999", color: "#000" }}>
+            {location.coords.latitude} {location.coords.longitude}
+          </span>
           <SearchBar />
           <MapMarker
             position={{
@@ -30,8 +42,6 @@ function MapPage() {
         </StyledMap>
       </Wrapper>
     );
-  } catch (error) {
-    return <Error error={error} />;
   }
 }
 
