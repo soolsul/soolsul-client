@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CommonWrapper = styled.div`
+export const CommonWrapper = styled.div<{ padding?: string }>`
   left: 50%;
   transform: translateX(-50%);
   max-width: 480px;
