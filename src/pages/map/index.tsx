@@ -1,9 +1,12 @@
-import { AddFeedButton, BottomMenu, Error, SearchBar } from "@components/pages/map";
-import Property from "@lib/utils/Properties";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
+
+import { BottomMenu } from "@components/pages/common";
+import { CommonWrapper } from "@components/pages/common/commonStyle";
+import { AddFeedButton, Error, SearchBar } from "@components/pages/map";
+import Property from "@lib/utils/Properties";
 
 function MapPage() {
   const [location, setLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
@@ -18,7 +21,7 @@ function MapPage() {
     return <Error />;
   } else {
     return (
-      <Wrapper>
+      <CommonWrapper>
         <StyledMap
           center={{
             lat: location.coords.latitude,
@@ -40,21 +43,12 @@ function MapPage() {
           <AddFeedButton />
           <BottomMenu />
         </StyledMap>
-      </Wrapper>
+      </CommonWrapper>
     );
   }
 }
 
 export default dynamic(() => Promise.resolve(MapPage), { ssr: false });
-
-const Wrapper = styled.div`
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 480px;
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-`;
 
 const StyledMap = styled(Map)`
   height: 100%;

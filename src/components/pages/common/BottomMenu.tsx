@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import styled, { css } from "styled-components";
 import useBottomMenu from "../../../hooks/pages/map/useBottomMenu";
-import Category from "./Category";
+import Category from "../map/Category";
 
 function BottomMenu() {
   const menuRef = useRef(null);
