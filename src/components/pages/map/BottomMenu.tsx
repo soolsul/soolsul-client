@@ -1,3 +1,5 @@
+import { CategoryType } from "@lib/types";
+import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import styled, { css } from "styled-components";
 import useBottomMenu from "../../../hooks/pages/map/useBottomMenu";
@@ -12,10 +14,10 @@ function BottomMenu() {
       <Wrapper top={menuCoords.top} transition={transition} ref={menuRef}>
         <Handle onMouseDown={handleStartTouch} onTouchStart={handleStartTouch} />
         <CategoryWrapper>
-          <Category value="sample1" />
-          <Category value="sample2" />
-          <Category value="sample3" />
-          <Category value="sample4" />
+          <Category value={CategoryType.CategoryEnum.MAP} />
+          <Category value={CategoryType.CategoryEnum.CURATION} />
+          <Category value={CategoryType.CategoryEnum.FEED} />
+          <Category value={CategoryType.CategoryEnum.MY_PAGE} />
         </CategoryWrapper>
       </Wrapper>
       <Shadow isShow={isShowShadow} />
@@ -23,7 +25,7 @@ function BottomMenu() {
   );
 }
 
-export default BottomMenu;
+export default dynamic(() => Promise.resolve(BottomMenu), { ssr: false });
 
 const Handle = styled.div`
   position: absolute;
