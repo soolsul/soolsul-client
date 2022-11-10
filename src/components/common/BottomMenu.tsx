@@ -2,8 +2,8 @@ import { CategoryType } from "@lib/types";
 import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import styled, { css } from "styled-components";
-import useBottomMenu from "../../../hooks/pages/map/useBottomMenu";
-import Category from "../map/Category";
+import useBottomMenu from "../../hooks/pages/map/useBottomMenu";
+import Category from "../pages/map/Category";
 
 function BottomMenu() {
   const menuRef = useRef(null);
