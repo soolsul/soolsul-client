@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
-import { BottomMenu } from "@components/pages/common";
-import { CommonWrapper } from "@components/pages/common/commonStyle";
+import { BottomMenu } from "@components/common";
+import { CommonWrapper } from "@components/common/commonStyle";
 import { AddFeedButton, Error, SearchBar } from "@components/pages/map";
 import Property from "@lib/utils/Properties";
 
@@ -27,6 +27,7 @@ function MapPage() {
             lat: location.coords.latitude,
             lng: location.coords.longitude,
           }}
+          onTileLoaded={() => {}}
         >
           <span style={{ position: "fixed", top: "0", zIndex: "999", color: "#000" }}>
             {location.coords.latitude} {location.coords.longitude}
