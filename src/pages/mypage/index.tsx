@@ -1,4 +1,4 @@
-import { BottomMenu, CommonWrapper } from "@components/pages/common";
+import { BottomMenu, CommonWrapper, Line } from "@components/common";
 import styled from "styled-components";
 
 function MyPage() {
@@ -16,12 +16,13 @@ function MyPage() {
           </div>
           <div className="following">
             <p>팔로워 n명</p>
+            <Line direction="vertical" thickness={0.5} width={14} />
             <p>팔로잉 n명</p>
           </div>
           <button>프로필 편집</button>
         </UserInfo>
       </Profile>
-
+      <Main></Main>
       <BottomMenu />
     </Wrapper>
   );
@@ -76,14 +77,27 @@ const UserInfo = styled.section`
   }
   .following {
     display: flex;
+    align-items: center;
     color: #595959;
-    p + p {
-      margin-left: 16px;
-    }
     margin-bottom: 16px;
+    hr {
+      margin: 0 8px;
+    }
   }
   button {
     width: 100%;
     padding: 7px 0;
+    border-radius: 15px;
+    background-color: #d9d9d9;
+    color: #000;
+    border: none;
+    cursor: pointer;
   }
+`;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 45px;
 `;
