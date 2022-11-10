@@ -27,7 +27,6 @@ function MapPage() {
             lat: location.coords.latitude,
             lng: location.coords.longitude,
           }}
-          onTileLoaded={() => {}}
         >
           <span style={{ position: "fixed", top: "0", zIndex: "999", color: "#000" }}>
             {location.coords.latitude} {location.coords.longitude}
