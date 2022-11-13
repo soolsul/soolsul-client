@@ -31,7 +31,7 @@ function Category({ value }: ICategoryProps) {
         router.push("/feed");
         break;
       case CategoryType.CategoryEnum.MY_PAGE:
-        router.push("/mypage");
+        router.push("/mypage/post");
         break;
     }
   };

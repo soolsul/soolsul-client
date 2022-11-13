@@ -5,18 +5,18 @@ type CategoryType = "post" | "reply" | "favorite";
 
 interface IHeaderProps {
   handleClickButton: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  activeButton: CategoryType;
+  category: CategoryType;
 }
-function Header({ handleClickButton, activeButton }: IHeaderProps) {
+function Header({ handleClickButton, category }: IHeaderProps) {
   return (
     <CategorySection>
-      <CategoryButton value="post" onClick={handleClickButton} isActive={activeButton === "post"}>
+      <CategoryButton value="post" onClick={handleClickButton} isActive={category === "post"}>
         내 게시물
       </CategoryButton>
-      <CategoryButton value="reply" onClick={handleClickButton} isActive={activeButton === "reply"}>
+      <CategoryButton value="reply" onClick={handleClickButton} isActive={category === "reply"}>
         내 댓글
       </CategoryButton>
-      <CategoryButton value="favorite" onClick={handleClickButton} isActive={activeButton === "favorite"}>
+      <CategoryButton value="favorite" onClick={handleClickButton} isActive={category === "favorite"}>
         관심 목록
       </CategoryButton>
     </CategorySection>
