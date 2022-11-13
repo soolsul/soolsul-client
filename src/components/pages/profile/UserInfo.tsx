@@ -1,7 +1,13 @@
 import { Line, ProfileImage } from "@components/common";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 function UserInfo() {
+  const router = useRouter();
+
+  const handleClickButton = () => {
+    router.push("/mypage/edit");
+  };
   return (
     <Wrapper>
       <ProfileImage />
@@ -14,7 +20,7 @@ function UserInfo() {
           <Line direction="vertical" thickness={0.5} width={14} />
           <p>팔로잉 n명</p>
         </div>
-        <button>프로필 편집</button>
+        <button onClick={handleClickButton}>프로필 편집</button>
       </StyledUserInfo>
     </Wrapper>
   );

@@ -1,94 +1,26 @@
 import styled from "styled-components";
+import Empty from "./Empty";
 
 function MyReply() {
+  const arr = " ".repeat(25).split(" ");
   return (
-    <Wrapper>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-      <Reply>
-        <Title>친하게 지내요!!! :)</Title>
-        <Time>방금 전 작성</Time>
-        <ReplyMenu />
-      </Reply>
-    </Wrapper>
+    <>
+      {arr.length === 0 ? (
+        <Empty description="작성한 댓글이 없습니다. <br/> 다름사람에게 의견을 남겨주세요." />
+      ) : (
+        <Wrapper>
+          {arr.map(() => {
+            return (
+              <Reply>
+                <Title>친하게 지내요!!! :)</Title>
+                <Time>방금 전 작성</Time>
+                <ReplyMenu />
+              </Reply>
+            );
+          })}
+        </Wrapper>
+      )}
+    </>
   );
 }
 

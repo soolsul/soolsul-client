@@ -1,26 +1,25 @@
 import styled from "styled-components";
+import Empty from "./Empty";
 
 function MyPost() {
+  // const arr = " ".repeat(25).split(" ");
+  const arr: any[] = [];
+
   return (
-    <Wrapper>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-    </Wrapper>
+    <>
+      {arr.length === 0 ? (
+        <Empty
+          description="추가하신 게시물 없습니다. <br/>
+          게시물을 올려보세요."
+        />
+      ) : (
+        <Wrapper>
+          {arr.map(() => {
+            return <Post />;
+          })}
+        </Wrapper>
+      )}
+    </>
   );
 }
 

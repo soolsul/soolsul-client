@@ -1,128 +1,32 @@
 import styled from "styled-components";
+import Empty from "./Empty";
 
 function MyFavorite() {
+  const arr = " ".repeat(25).split(" ");
+
   return (
-    <Wrapper>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-      <Post>
-        <Image />
-        <Description>
-          <FavoriteMenu />
-          <p>동네 위치</p>
-        </Description>
-      </Post>
-    </Wrapper>
+    <>
+      {arr.length === 0 ? (
+        <Empty
+          description="저장한 피드가 없습니다 <br/>
+        가고 싶은 공간을 저장하세요."
+        />
+      ) : (
+        <Wrapper>
+          {arr.map(() => {
+            return (
+              <Post>
+                <Image />
+                <Description>
+                  <FavoriteMenu />
+                  <p>동네 위치</p>
+                </Description>
+              </Post>
+            );
+          })}
+        </Wrapper>
+      )}
+    </>
   );
 }
 

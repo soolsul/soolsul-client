@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import MyFavorite from "./MyFavorite";
@@ -6,21 +7,23 @@ import MyPost from "./MyPost";
 import MyReply from "./MyReply";
 
 type CategoryType = "post" | "reply" | "favorite";
-
-function MainSection() {
-  const [activeButton, setActiveButton] = useState<CategoryType>("post");
+interface IMainSectionProps {
+  category: CategoryType;
+}
+function MainSection({ category }: IMainSectionProps) {
+  const router = useRouter();
 
   const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
-    setActiveButton(target.value as CategoryType);
+    router.push(`/mypage/${target.value as CategoryType}`);
   };
 
   return (
     <Main>
-      <Header handleClickButton={handleClickButton} activeButton={activeButton} />
-      {activeButton === "post" && <MyPost />}
-      {activeButton === "reply" && <MyReply />}
-      {activeButton === "favorite" && <MyFavorite />}
+      <Header handleClickButton={handleClickButton} category={category} />
+      {category === "post" && <MyPost />}
+      {category === "reply" && <MyReply />}
+      {category === "favorite" && <MyFavorite />}
     </Main>
   );
 }
