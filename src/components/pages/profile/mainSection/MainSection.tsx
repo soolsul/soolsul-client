@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import MyPost from "./MyPost";
+import MyReply from "./MyReply";
 
 type CategoryType = "post" | "reply" | "favorite";
 
@@ -17,6 +18,7 @@ function MainSection() {
     <Main>
       <Header handleClickButton={handleClickButton} activeButton={activeButton} />
       {activeButton === "post" && <MyPost />}
+      {activeButton === "reply" && <MyReply />}
     </Main>
   );
 }
