@@ -7,7 +7,6 @@ function ProfileImage() {
 export default ProfileImage;
 
 const ImageWrapper = styled.img`
-  width: 25%;
   max-width: 150px;
   aspect-ratio: 1/1;
   border-radius: 50%;

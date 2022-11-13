@@ -44,15 +44,24 @@ const Wrapper = styled.div<{ top: number; transition: number }>`
   flex-direction: column;
   position: absolute;
   width: 100%;
-  height: 70vh;
   border-radius: 6px 6px 0 0;
   background-color: #fff;
+  transform: translateX(-50%);
   z-index: 500;
+  left: 50%;
   ${({ top, transition }) => {
+    if (typeof window === "undefined") return;
+    window.addEventListener("resize", (event) => {
+      const target = event.target as Window;
+      return css`
+        height: ${target.innerHeight * 0.7}px;
+        top: ${target.innerHeight + top}px;
+        transition: 0;
+      `;
+    });
     return css`
-      top: 100%;
-      left: 50%;
-      transform: translate(-50%, ${top}px);
+      height: ${window.innerHeight * 0.7}px;
+      top: ${window.innerHeight + top}px;
       transition: ${transition}ms;
     `;
   }}

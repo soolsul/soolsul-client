@@ -24,11 +24,13 @@ export default UserInfo;
 
 const Wrapper = styled.div`
   display: flex;
-  margin: 16px 16px 40px 16px;
+  justify-content: space-between;
+  height: 15%;
+  padding: 16px;
 `;
 
 const StyledUserInfo = styled.section`
-  width: 50%;
+  width: 60%;
   p {
     margin: 0;
   }

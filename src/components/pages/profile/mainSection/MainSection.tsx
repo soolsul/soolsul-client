@@ -27,5 +27,5 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 45px;
+  height: calc(85% - 140px);
 `;

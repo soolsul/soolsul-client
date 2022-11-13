@@ -54,6 +54,7 @@ const CategoryButton = styled.button`
   padding: 18px 10px;
   background: none;
   border: none;
+  max-height: 70px;
   cursor: pointer;
   p {
     margin: 0;
