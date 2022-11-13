@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./Header";
+import MyFavorite from "./MyFavorite";
 import MyPost from "./MyPost";
 import MyReply from "./MyReply";
 
@@ -19,6 +20,7 @@ function MainSection() {
       <Header handleClickButton={handleClickButton} activeButton={activeButton} />
       {activeButton === "post" && <MyPost />}
       {activeButton === "reply" && <MyReply />}
+      {activeButton === "favorite" && <MyFavorite />}
     </Main>
   );
 }
