@@ -8,7 +8,7 @@ export default AddFeedButton;
 
 const StyledButton = styled.button`
   position: fixed;
-  bottom: 216px;
+  bottom: 80px;
   right: 16px;
   width: 54px;
   height: 54px;
