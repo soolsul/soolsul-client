@@ -15,7 +15,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 0 16px;
   height: 70px;
   h1 {
     font-size: 20px;
