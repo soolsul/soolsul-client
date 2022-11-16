@@ -10,7 +10,7 @@ export const CommonWrapper = styled.div`
 `
 
 export const CommonButton = styled.button`
-  width: 75%;
+  width: 100%;
   padding: 15px 25px;
   margin: 10px;
   border-radius: 25px;
