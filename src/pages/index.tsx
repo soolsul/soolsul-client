@@ -1,4 +1,4 @@
-import { CommonWrapper } from '@components/common'
+import { CommonButton, CommonWrapper } from '@components/common'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -14,22 +14,20 @@ const Home: NextPage = () => {
     <Wrapper>
       <HomeContainer>
         <div className='logo'>LOGO</div>
-        <button
-          style={{ display: 'block' }}
+        <CommonBtn
           onClick={() => {
             router.push('map')
           }}
         >
           게스트로 들어가기
-        </button>
-        <button
-          style={{ display: 'block' }}
+        </CommonBtn>
+        <CommonBtn
           onClick={() => {
             router.push('login')
           }}
         >
           로그인
-        </button>
+        </CommonBtn>
       </HomeContainer>
     </Wrapper>
   )
@@ -65,5 +63,8 @@ const HomeContainer = styled.div`
     background: #5f3dc4;
     color: #fff;
     font-weight: 700;
+    font-size: 14px;
   }
 `
+
+const CommonBtn = styled(CommonButton)``
