@@ -1,4 +1,4 @@
-import { BottomMenu, CommonWrapper, ProfileImage } from "@components/common";
+import { BottomMenu, Box, CommonWrapper, ProfileImage } from "@components/common";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -10,7 +10,7 @@ function Edit() {
   return (
     <Wrapper>
       <Header>
-        <PinkButton />
+        <Box />
         <p>프로필 편집</p>
         <button className="complete" onClick={handleSubmit}>
           완료
@@ -65,13 +65,6 @@ const Header = styled.header`
     font-size: 14px;
     cursor: pointer;
   }
-`;
-
-const PinkButton = styled.button`
-  width: 24px;
-  height: 24px;
-  background: #ffdada;
-  border: none;
 `;
 
 const ProfileImageSection = styled.section`
