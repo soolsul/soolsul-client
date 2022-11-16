@@ -17,7 +17,7 @@ function Edit() {
         </button>
       </Header>
       <ProfileImageSection>
-        <ProfileImage />
+        <ProfileImage src="http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg" />
         <button>사진 변경하기</button>
       </ProfileImageSection>
       <EditUserInfoSection>
