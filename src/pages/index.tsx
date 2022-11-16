@@ -1,34 +1,49 @@
 import { CommonButton, CommonWrapper } from '@components/common'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import Splash from './splash'
 
 const Home: NextPage = () => {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500)
+  }, [])
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     window.localStorage.removeItem('GeoLocation')
   }, [])
   return (
     <Wrapper>
-      <HomeContainer>
-        <div className='logo'>LOGO</div>
-        <CommonBtn
-          onClick={() => {
-            router.push('map')
-          }}
-        >
-          게스트로 들어가기
-        </CommonBtn>
-        <CommonBtn
-          onClick={() => {
-            router.push('login')
-          }}
-        >
-          로그인
-        </CommonBtn>
-      </HomeContainer>
+      {isLoading ? (
+        <Splash />
+      ) : (
+        <>
+          <HomeContainer>
+            <div className='logo'>LOGO</div>
+            <CommonBtn
+              onClick={() => {
+                router.push('map')
+              }}
+            >
+              게스트로 들어가기
+            </CommonBtn>
+            <CommonBtn
+              onClick={() => {
+                router.push('login')
+              }}
+            >
+              로그인
+            </CommonBtn>
+          </HomeContainer>
+        </>
+      )}
     </Wrapper>
   )
 }
