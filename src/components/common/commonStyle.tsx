@@ -7,7 +7,13 @@ export const CommonWrapper = styled.div`
   position: relative;
   overflow: hidden;
   height: 100vh;
-`
+`;
+
+export const Box = styled.div`
+  width: 24px;
+  height: 24px;
+  background-color: #ffdada;
+`;
 
 export const CommonButton = styled.button`
   width: 100%;
@@ -19,4 +25,4 @@ export const CommonButton = styled.button`
   color: #fff;
   font-weight: 700;
   font-size: 14px;
-`
+`;
