@@ -9,7 +9,6 @@ const Home: NextPage = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
     }, 1500)
