@@ -7,7 +7,7 @@ import Splash from './splash'
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     setIsLoading(true)
     setTimeout(() => {
