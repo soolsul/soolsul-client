@@ -8,19 +8,30 @@ import Splash from './splash'
 const Home: NextPage = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
+  const [isFirstTime, setIsFirstTime] = useState(true)
+
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1500)
+    // 앱 시작하자마자 sessionstorage 확인해서 isFirstTime 존재하는지 체크
+    if (sessionStorage.getItem('isFirstTime')) {
+      sessionStorage.setItem('isFirstTime', 'false')
+      console.log('퍼스트 타임')
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1500)
+    } else {
+      setIsFirstTime(false)
+      console.log('퍼스트 타임 아님')
+    }
   }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
     window.localStorage.removeItem('GeoLocation')
   }, [])
+
   return (
     <Wrapper>
-      {isLoading ? (
+      {isFirstTime ? (
         <Splash />
       ) : (
         <>
