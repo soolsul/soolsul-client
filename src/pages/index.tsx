@@ -7,7 +7,6 @@ import Splash from './splash'
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
   const [isFirstTime, setIsFirstTime] = useState(true)
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const Home: NextPage = () => {
       sessionStorage.setItem('isFirstTime', 'false')
       console.log('퍼스트 타임')
       setTimeout(() => {
-        setIsLoading(false)
+        setIsFirstTime(false)
       }, 1500)
     } else {
       setIsFirstTime(false)

@@ -1,14 +1,30 @@
-// src/pages/signup/index.tsx
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { CommonButton, CommonWrapper, Header } from '@components/common'
 import { LoginInput } from '@components/pages/login'
 import { useRouter } from 'next/router'
+import { setRevalidateHeaders } from 'next/dist/server/send-payload'
 
 function Signup() {
   const router = useRouter()
   // const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin()
   // const { id, password } = loginInfo
+
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phoneNum: '',
+    name: '',
+    nickname: '',
+  })
+
+  const handleInputValue = ({ inputItem }) => {
+    setData({
+      ...data,
+      inputItem,
+    })
+  }
 
   return (
     <Wrapper>
@@ -18,6 +34,7 @@ function Signup() {
           id='email'
           title={'이메일'}
           placeHolderText={'예) numble@gmail.com'}
+          handleInputChange={handleInputValue}
         />
         <LoginInput
           id='password'
