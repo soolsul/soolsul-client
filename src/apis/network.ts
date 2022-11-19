@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from "axios";
-import { getToken } from "@lib/utils";
-import { InterceptorCallbackType } from "./type";
-import { LoginType } from "@lib/types/user";
+import axios, { AxiosInstance } from 'axios';
+import { getToken } from '@lib/utils';
+import { InterceptorCallbackType } from './type';
+import { LoginType, SignupType } from '@lib/types/user';
 
 /**
  * REST API 관련 클래스
@@ -16,7 +16,7 @@ export class Network {
     this._instance = axios.create({
       baseURL,
       headers: {
-        "x-auth-token": this._token,
+        'x-auth-token': this._token,
       },
     });
   }
@@ -26,7 +26,10 @@ export class Network {
    */
   user = {
     login: async ({ id, password }: LoginType) => {
-      return this._instance.post("/login", { id, password });
+      return this._instance.post('/login', { id, password });
+    },
+    join: async ({ email, password, phoneNumber, name, nickname }: SignupType) => {
+      return this._instance.post('/join', { email, password, phoneNumber, name, nickname });
     },
   };
 
