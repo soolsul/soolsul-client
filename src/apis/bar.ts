@@ -1,4 +1,5 @@
 import { BarType } from '@lib/types';
+import { AxiosResponse } from 'axios';
 import APIS from './network';
 
 /**
@@ -6,12 +7,12 @@ import APIS from './network';
  * @param id 유저 아이디
  * @param password 비밀번호
  */
-export function getBarList(data: BarType.barSearchTyoe) {
+export function getBarList(data: BarType.barSearchTyoe): Promise<{ code: string; data: any; message: string }> {
   return new Promise((resolve, reject) => {
     try {
       (async () => {
-        const result = await APIS.bar.getBarList(data);
-        resolve(result);
+        const result: AxiosResponse<{ code: string; data: any; message: string }> = await APIS.bar.getBarList(data);
+        resolve(result.data);
       })();
     } catch (error) {
       reject(error);
