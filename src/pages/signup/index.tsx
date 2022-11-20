@@ -2,45 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CommonButton, CommonWrapper, Header } from '@components/common';
 import { LoginInput } from '@components/pages/login';
-import { useRouter } from 'next/router';
-import { signup } from '@apis/users';
+import useSignup from '@hooks/pages/signup/useSignup';
 
 function Signup() {
-  const router = useRouter();
-
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phoneNumber: '',
-    name: '',
-    nickname: '',
-  });
-
-  const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    const inputID = e.target.id;
-
-    setData({
-      ...data,
-      [inputID]: inputValue,
-    });
-  };
-
-  const submitSignup = async () => {
-    if (data.password !== data.confirmPassword) {
-      alert('패스워드가 일치하지 않습니다.');
-    } else if (data.email && data.password && data.confirmPassword && data.phoneNumber && data.name && data.nickname) {
-      await signup(data)
-        .then((res) => {
-          console.log(res);
-          router.push('map');
-        })
-        .catch((err) => console.log('회원가입 에러 : ', err.message));
-    } else {
-      alert('가입 정보를 다  채워주세요');
-    }
-  };
+  const { data, invalidText, errorPart, handleSignSubmit, handleInputValue } = useSignup();
+  console.log(data);
+  console.log(errorPart, invalidText);
 
   return (
     <Wrapper>
@@ -52,6 +19,8 @@ function Signup() {
           placeHolderText={'예) numble@gmail.com'}
           onChange={handleInputValue}
           value={data.email}
+          invalidText={invalidText}
+          errorPart={errorPart}
         />
         <LoginInput
           id="password"
@@ -59,6 +28,8 @@ function Signup() {
           placeHolderText={'영문, 숫자 조합 8~20 자리'}
           onChange={handleInputValue}
           value={data.password}
+          invalidText={invalidText}
+          errorPart={errorPart}
         />
         <LoginInput
           id="confirmPassword"
@@ -66,6 +37,8 @@ function Signup() {
           placeHolderText={'비밀번호 재입력'}
           onChange={handleInputValue}
           value={data.confirmPassword}
+          invalidText={invalidText}
+          errorPart={errorPart}
         />
         <LoginInput
           id="phoneNumber"
@@ -73,8 +46,18 @@ function Signup() {
           placeHolderText={'010-0000-0000'}
           onChange={handleInputValue}
           value={data.phoneNumber}
+          invalidText={invalidText}
+          errorPart={errorPart}
         />
-        <LoginInput id="name" title={'이름'} placeHolderText={'김넘블'} onChange={handleInputValue} value={data.name} />
+        <LoginInput
+          id="name"
+          title={'이름'}
+          placeHolderText={'김넘블'}
+          onChange={handleInputValue}
+          value={data.name}
+          invalidText={invalidText}
+          errorPart={errorPart}
+        />
 
         <LoginInput
           id="nickname"
@@ -82,8 +65,10 @@ function Signup() {
           placeHolderText={'김넘블 챌린지'}
           onChange={handleInputValue}
           value={data.nickname}
+          invalidText={invalidText}
+          errorPart={errorPart}
         />
-        <CommonBtn onClick={submitSignup}>로그인</CommonBtn>
+        <CommonBtn onClick={handleSignSubmit}>로그인</CommonBtn>
       </LoginContainer>
     </Wrapper>
   );

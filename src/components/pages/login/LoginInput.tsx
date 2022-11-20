@@ -7,9 +7,12 @@ interface IInputProps {
   placeHolderText: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  invalidText: string;
+  errorPart: string;
 }
 
-function LoginInput({ id, title, placeHolderText, onChange, value }: IInputProps) {
+function LoginInput({ id, title, placeHolderText, onChange, value, invalidText, errorPart }: IInputProps) {
+  console.log(invalidText);
   return (
     <Wrapper>
       <div className="title">{title}</div>
@@ -21,6 +24,7 @@ function LoginInput({ id, title, placeHolderText, onChange, value }: IInputProps
         alt={'입력창'}
         type={id.includes('password') || id.includes('confirmPassword') ? 'password' : ''}
       />
+      <p>{id === errorPart ? invalidText : null}</p>
     </Wrapper>
   );
 }
@@ -34,8 +38,12 @@ const Wrapper = styled.div`
   margin: 5px;
 
   .title {
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     font-size: 14px;
+  }
+  p {
+    color: tomato;
+    font-size: 11px;
   }
 `;
 
@@ -45,7 +53,7 @@ const Input = styled.input`
   border-bottom: 1px solid #e6e6e6;
   border-radius: 0px;
   text-align: start;
-  padding: 5px 0px;
+  padding: 5px 5px;
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 5px;
