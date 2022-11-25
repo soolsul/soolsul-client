@@ -1,5 +1,5 @@
-import { LoginType } from "@lib/types/user";
-import APIS from "./network";
+import { LoginType } from '@lib/types/user';
+import APIS from './network';
 
 /**
  * 로그인하기
@@ -18,3 +18,7 @@ export function login(data: LoginType) {
     }
   });
 }
+
+export const getUserInfo = async (userID: string) => {
+  return await APIS.instance.get(`/api/user/${userID}`);
+};
