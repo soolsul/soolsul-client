@@ -11,9 +11,22 @@ export function login(data: LoginType) {
     try {
       (async () => {
         const result = await APIS.user.login(data);
+        console.log(result);
         resolve(result);
+
+        // const response = await APIS.user.login(data);
+        // const { accessToken } = response.data;
+        // const { refreshToken } = response.data;
+        // localStorage.setItem('accessToken', accessToken);
+        // localStorage.setItem('refreshToken', refreshToken);
+
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+        // console.log('login request result: ', response);
+        // resolve(response);
       })();
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });
@@ -28,15 +41,15 @@ export function login(data: LoginType) {
  * @param nickname 닉네임
  */
 export function signup(data: SignupType) {
-  console.log(data);
   return new Promise((resolve, reject) => {
     try {
       (async () => {
         const result = await APIS.user.join(data);
-        console.log(APIS);
+        console.log(result);
         resolve(result);
       })();
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });

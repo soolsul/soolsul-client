@@ -25,11 +25,17 @@ export class Network {
    * 유저 관련 API
    */
   user = {
-    login: async ({ id, password }: LoginType) => {
-      return this._instance.post('/login', { id, password });
+    login: async ({ email, password }: LoginType) => {
+      return this._instance.post(
+        '/auth/login',
+        { email, password },
+        {
+          headers: { 'X-Requested-With': 'JSONLoginHttpRequest' },
+        }
+      );
     },
     join: async ({ email, password, phoneNumber, name, nickname }: SignupType) => {
-      return this._instance.post('/join', { email, password, phoneNumber, name, nickname });
+      return this._instance.post('/auth/register', { email, password, phone: phoneNumber, name, nickname });
     },
   };
 
