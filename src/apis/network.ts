@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import { getToken } from '@lib/utils';
 import { InterceptorCallbackType } from './type';
-import { LoginType } from '@lib/types/user';
+import { LoginType, SignupType } from '@lib/types/user';
+
 import { BarType } from '@lib/types';
 
 /**
@@ -26,8 +27,21 @@ export class Network {
    * 유저 관련 API
    */
   user = {
-    login: async ({ id, password }: LoginType) => {
-      return this._instance.post('/login', { id, password });
+    login: async ({ email, password }: LoginType) => {
+      return this._instance.post(
+        '/auth/login',
+        { email, password },
+        {
+          headers: { 'X-Requested-With': 'JSONLoginHttpRequest' },
+        }
+      );
+    },
+    logout: async () => {
+      return this._instance.post('/auth/logout');
+    },
+    join: async ({ email, password, phoneNumber, name, nickname }: SignupType) => {
+      return this._instance.post('/auth/register', { email, password, phone: phoneNumber, name, nickname });
+
     },
   };
 
