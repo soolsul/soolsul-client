@@ -3,6 +3,8 @@ import { getToken } from '@lib/utils';
 import { InterceptorCallbackType } from './type';
 import { LoginType, SignupType } from '@lib/types/user';
 
+import { BarType } from '@lib/types';
+
 /**
  * REST API 관련 클래스
  */
@@ -39,9 +41,17 @@ export class Network {
     },
     join: async ({ email, password, phoneNumber, name, nickname }: SignupType) => {
       return this._instance.post('/auth/register', { email, password, phone: phoneNumber, name, nickname });
+
     },
   };
 
+  bar = {
+    getBarList: async ({ latitude, longitude, zoomLevel = 6, moodTag = '', drinkTag = '' }: BarType.barSearchTyoe) => {
+      return this._instance.get(
+        `/api/bars?latitude=${latitude}&longitude=${longitude}&level=${zoomLevel}&barMoodTagNames=${moodTag}&barAlcoholTagNames=${drinkTag}`
+      );
+    },
+  };
   /**
    * axios 인터셉터
    */
@@ -77,6 +87,9 @@ export class Network {
       );
       return this._instance;
     }
+  }
+  get instance() {
+    return this._instance;
   }
 }
 /**
