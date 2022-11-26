@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// import { BottomMenu } from '@components/common';
 import { BottomMenu, CommonWrapper } from '@components/common';
 import { CurationItem } from '@components/pages/curation';
 import { useRouter } from 'next/router';
@@ -9,17 +8,17 @@ import { useRouter } from 'next/router';
 function Curation() {
   const router = useRouter();
 
-  // const handleClick =()=> {
-  //   router.push('/curation/detail')
-  // }
+  const handleClick = () => {
+    router.push('/curation/detail');
+  };
 
   return (
     <Wrapper>
       <div className="contentsContainer">
+        <h1>큐레이션 페이지</h1>
         <ul>
-          <h1>큐레이션 페이지</h1>
-          <CurationItem />
-          <CurationItem />
+          <CurationItem onClick={handleClick} />
+          <CurationItem onClick={handleClick} />
         </ul>
       </div>
       <BottomMenu />
@@ -40,5 +39,10 @@ const Wrapper = styled(CommonWrapper)`
     padding: 15px;
     height: 100%;
     overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .contentsContainer::-webkit-scrollbar {
+    display: none;
   }
 `;

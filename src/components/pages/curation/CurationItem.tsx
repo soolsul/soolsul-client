@@ -1,13 +1,17 @@
 import styled from 'styled-components';
-import storeImg from '@assets/images/storeIcon.png';
+import storeImg from '@assets/images/curation/storeIcon.png';
 import Image from 'next/image';
 import { TagItem } from '@components/pages/curation';
 
-function CurationItem() {
+interface ICurationProps {
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+function CurationItem({ onClick }: ICurationProps) {
   const imageSrc = 'https://ifh.cc/g/LLgls5.jpg';
 
   return (
-    <PostItemWrapper>
+    <PostItemWrapper onClick={onClick}>
       <CurationImage src={imageSrc} />
       <ContentBox>
         <p className="title">부타이제2막</p>
