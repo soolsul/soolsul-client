@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { CommonButton, CommonWrapper } from '@components/common';
 import { LoginInput } from '@components/pages/login';
-import { useRouter } from 'next/router';
 import { useLogin } from '@hooks/pages/login';
-import { login } from '@apis/users';
 
 function Login() {
   const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();

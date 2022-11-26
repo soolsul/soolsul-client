@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CommonButton, CommonWrapper, Header } from '@components/common';
 import { LoginInput } from '@components/pages/login';
