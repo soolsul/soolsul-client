@@ -34,6 +34,9 @@ export class Network {
         }
       );
     },
+    logout: async () => {
+      return this._instance.post('/auth/logout');
+    },
     join: async ({ email, password, phoneNumber, name, nickname }: SignupType) => {
       return this._instance.post('/auth/register', { email, password, phone: phoneNumber, name, nickname });
     },

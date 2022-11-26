@@ -36,20 +36,22 @@ const Home: NextPage = () => {
         <>
           <HomeContainer>
             <div className="logo">LOGO</div>
-            <CommonBtn
-              onClick={() => {
-                router.push('map');
-              }}
-            >
-              게스트로 들어가기
-            </CommonBtn>
-            <CommonBtn
-              onClick={() => {
-                router.push('login');
-              }}
-            >
-              로그인
-            </CommonBtn>
+            <div className="buttonBox">
+              <CommonBtn
+                onClick={() => {
+                  router.push('map');
+                }}
+              >
+                게스트로 들어가기
+              </CommonBtn>
+              <CommonBtn
+                onClick={() => {
+                  router.push('login');
+                }}
+              >
+                로그인
+              </CommonBtn>
+            </div>
           </HomeContainer>
         </>
       )}
@@ -67,28 +69,40 @@ const HomeContainer = styled.div`
   display: flex;
   height: 100vh;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   .logo {
     margin: 3rem;
-    min-width: 13rem;
-    min-height: 13rem;
+    width: 13rem;
+    height: 13rem;
     background: #e6e6e6;
     text-align: center;
+    position: absolute;
+    top: 13rem;
+  }
+
+  .buttonBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 6rem;
   }
 
   button {
-    width: 75%;
-    padding: 15px 25px;
-    margin: 10px;
+    width: 358px;
     border-radius: 25px;
     border: none;
     background: #5f3dc4;
     color: #fff;
     font-weight: 700;
     font-size: 14px;
+    height: 52px;
   }
 `;
 
-const CommonBtn = styled(CommonButton)``;
+const CommonBtn = styled(CommonButton)`
+  margin: 10px 0px;
+`;

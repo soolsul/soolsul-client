@@ -1,4 +1,5 @@
 import { LoginType, SignupType } from '@lib/types/user';
+import axios from 'axios';
 import APIS from './network';
 
 /**
@@ -14,19 +15,16 @@ export function login(data: LoginType) {
         console.log(result);
         resolve(result);
 
-        // const response = await APIS.user.login(data);
-        // const { accessToken } = response.data;
-        // const { refreshToken } = response.data;
-        // localStorage.setItem('accessToken', accessToken);
-        // localStorage.setItem('refreshToken', refreshToken);
+        const { accessToken } = result.data;
+        const { refreshToken } = result.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-        // console.log('login request result: ', response);
-        // resolve(response);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        console.log('axios 헤더의 Authorization은 현재 :', axios.defaults.headers.common.Authorization);
       })();
     } catch (error) {
-      console.log(error);
+      console.log('로그인 에러', error);
       reject(error);
     }
   });
@@ -49,7 +47,31 @@ export function signup(data: SignupType) {
         resolve(result);
       })();
     } catch (error) {
-      console.log(error);
+      console.log('회원가입 에러', error);
+      reject(error);
+    }
+  });
+}
+
+/**
+ * 로그아웃 하기 (param 없음)
+ */
+export function logout() {
+  // const accessToken = localStorage.getItem('accessToken')
+  // const refreshToken = localStorage.getItem('accessToken');
+  return new Promise((resolve, reject) => {
+    try {
+      (async () => {
+        const result = await APIS.user.logout();
+        console.log(result);
+        resolve(result);
+
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        axios.defaults.headers.common.Authorization = '';
+      })();
+    } catch (error) {
+      console.log('로그아웃 에러', error);
       reject(error);
     }
   });

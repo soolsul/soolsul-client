@@ -12,7 +12,6 @@ interface IInputProps {
 }
 
 function LoginInput({ id, title, placeHolderText, onChange, value, invalidText, errorPart }: IInputProps) {
-  console.log(invalidText);
   return (
     <Wrapper>
       <div className="title">{title}</div>
@@ -24,6 +23,7 @@ function LoginInput({ id, title, placeHolderText, onChange, value, invalidText, 
         alt={'입력창'}
         type={id.includes('password') || id.includes('confirmPassword') ? 'password' : ''}
       />
+      {id.includes('password') || id.includes('confirmPassword') ? <div className="iconBox" /> : null}
       <p>{id === errorPart ? invalidText : null}</p>
     </Wrapper>
   );
@@ -36,14 +36,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 5px 0;
   margin: 5px;
+  position: relative;
 
   .title {
-    margin-bottom: 7px;
+    margin-bottom: 12px;
     font-size: 14px;
   }
   p {
     color: tomato;
     font-size: 11px;
+  }
+  .iconBox {
+    width: 20px;
+    height: 20px;
+    background-color: pink;
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
   }
 `;
 
