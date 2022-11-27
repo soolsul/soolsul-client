@@ -4,8 +4,11 @@ import APIS from './network';
 
 /**
  * 로그인하기
- * @param id 유저 아이디
- * @param password 비밀번호
+ * @param latitude
+ * @param longitude
+ * @param zoomLevel
+ * @param moodTag
+ * @param drinkTag
  */
 export function getBarList(data: BarType.barSearchTyoe): Promise<{ code: string; data: any; message: string }> {
   return new Promise((resolve, reject) => {

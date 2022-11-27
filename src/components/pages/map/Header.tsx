@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
 import filterImg from '../../../assets/icons/filter.svg';
 
 function Header() {
   return (
     <Wrapper>
-      <SearchBar />
+      {/* <SearchBar /> */}
       <FilterWrapper>
         <div className="filterIcon">
           <Image src={filterImg} />

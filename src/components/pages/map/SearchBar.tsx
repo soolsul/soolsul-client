@@ -1,19 +1,26 @@
 import { Box } from '@components/common';
 import { TextInput } from '@components/Input';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import searchIcon from '../../../assets/icons/search.svg';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   const handleChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
+  const handleSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/map/search?value=${searchValue}`);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit}>
       <LogoBox position="left">
         <Image src={searchIcon} />
       </LogoBox>

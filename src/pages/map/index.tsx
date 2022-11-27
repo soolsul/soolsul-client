@@ -10,7 +10,7 @@ import Property from '@lib/utils/Properties';
 
 function MapPage() {
   const [barList, setBarList] = useState<any[] | null>(null);
-  const [center, setCenter] = useState<{ lat: number; lng: number }>({ lat: 37.565314, lng: 126.992646 });
+  const [mapInfo, setMapInfo] = useState<{ lat: number; lng: number }>({ lat: 37.565314, lng: 126.992646 });
   const [myLocation, setMyLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
 
   useEffect(() => {
@@ -20,19 +20,25 @@ function MapPage() {
   }, []);
 
   useEffect(() => {
-    if (!center) return;
     (async () => {
-      const result = await apis.bar.getBarList({ latitude: 37.565214, longitude: 126.994546 });
+      const result = await apis.bar.getBarList({ latitude: 37.565314, longitude: 126.992646 });
       setBarList(result.data.barList);
     })();
-  }, [center]);
+  }, []);
 
-  if (!center || !myLocation) {
+  if (!mapInfo || !myLocation) {
     return <Error />;
   } else {
     return (
       <CommonWrapper>
-        <StyledMap center={{ ...center }}>
+        <StyledMap
+          center={{ ...mapInfo }}
+          onBoundsChanged={(map: any) => {
+            const center = map.getCenter();
+            const [lat, lng] = [center.getLat(), center.getLng()];
+            setMapInfo({ ...mapInfo, lat, lng });
+          }}
+        >
           <Header />
           {barList?.map((bar) => {
             return (
@@ -44,7 +50,12 @@ function MapPage() {
               </>
             );
           })}
-          <MapMarker position={{ ...center }} />
+          <MapMarker
+            position={{
+              lat: myLocation.coords.latitude,
+              lng: myLocation.coords.longitude,
+            }}
+          />
           <CustomOverlayMap
             position={{
               lat: myLocation.coords.latitude,
@@ -58,7 +69,7 @@ function MapPage() {
               window.navigator.geolocation.getCurrentPosition((position) => {
                 Property.setUserLocation(position);
                 setMyLocation(position);
-                setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                setMapInfo({ ...mapInfo, lat: position.coords.latitude, lng: position.coords.longitude });
               });
             }}
           />
