@@ -2,44 +2,37 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
-
 import { BottomMenu } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
-import { AddFeedButton, Error, Header } from '@components/pages/map';
-import Property from '@lib/utils/Properties';
+import { CurrentLocationButton, Error, Header } from '@components/pages/map';
 import apis from '@apis/index';
+import Property from '@lib/utils/Properties';
 
 function MapPage() {
   const [barList, setBarList] = useState<any[] | null>(null);
-  const [location, setLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
+  const [center, setCenter] = useState<{ lat: number; lng: number }>({ lat: 37.565314, lng: 126.992646 });
+  const [myLocation, setMyLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
 
   useEffect(() => {
     window.navigator.geolocation.watchPosition((position) => {
-      setLocation(position);
+      setMyLocation(position);
     });
   }, []);
 
   useEffect(() => {
-    if (!location) return;
+    if (!center) return;
     (async () => {
       const result = await apis.bar.getBarList({ latitude: 37.565214, longitude: 126.994546 });
       setBarList(result.data.barList);
     })();
-  }, [location]);
+  }, [center]);
 
-  if (!location) {
+  if (!center || !myLocation) {
     return <Error />;
   } else {
     return (
       <CommonWrapper>
-        <StyledMap
-          center={{
-            lat: 37.565314,
-            lng: 126.992646,
-            // lat: location.coords.latitude,
-            // lng: location.coords.longitude,
-          }}
-        >
+        <StyledMap center={{ ...center }}>
           <Header />
           {barList?.map((bar) => {
             return (
@@ -51,21 +44,24 @@ function MapPage() {
               </>
             );
           })}
-          <MapMarker
-            position={{
-              lat: location.coords.latitude,
-              lng: location.coords.longitude,
-            }}
-          />
+          <MapMarker position={{ ...center }} />
           <CustomOverlayMap
             position={{
-              lat: location.coords.latitude,
-              lng: location.coords.longitude,
+              lat: myLocation.coords.latitude,
+              lng: myLocation.coords.longitude,
             }}
           >
             <BarName>현위치</BarName>
           </CustomOverlayMap>
-          <AddFeedButton />
+          <CurrentLocationButton
+            onClick={() => {
+              window.navigator.geolocation.getCurrentPosition((position) => {
+                Property.setUserLocation(position);
+                setMyLocation(position);
+                setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+              });
+            }}
+          />
           <BottomMenu />
         </StyledMap>
       </CommonWrapper>
