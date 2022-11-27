@@ -4,23 +4,23 @@ import { BottomMenu, Line } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
 import { CurationDetailContents } from '@components/pages/curation';
 import InfoSection from '@components/pages/curation/InfoSection';
-import { useState } from 'react';
-// import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 type CategoryType = 'info' | 'review';
 function Detail() {
   const imageSrc = 'https://ifh.cc/g/LLgls5.jpg';
   const [category, setCategory] = useState<CategoryType>('info');
-  // const router = useRouter();
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   try {
-  //     setCategory(router.query.category as CategoryType);
-  //   } catch (err) {
-  //     alert(err);
-  //     setCategory('info');
-  //   }
-  // }, [router]);
+  useEffect(() => {
+    try {
+      setCategory(router.query.category as CategoryType);
+    } catch (err) {
+      alert(err);
+      setCategory('info');
+    }
+  }, [router]);
 
   return (
     <Wrapper>

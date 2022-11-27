@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { ProfileImage } from '@components/common';
 
 function Review() {
-  // const arr = " ".repeat(25).split(" ");
-
   return (
     <Wrapper>
       <WriterInfo>
