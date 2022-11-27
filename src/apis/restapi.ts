@@ -72,6 +72,6 @@ export class Network {
 /**
  * REST API 인스턴스
  */
-const Instance = new Network(process.env.NEXT_PUBLIC_API_BASE_URL);
+const RestAPI = new Network(process.env.NEXT_PUBLIC_API_BASE_URL);
 
-export default Instance;
+export default RestAPI;

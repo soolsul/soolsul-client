@@ -1,17 +1,16 @@
 import { LoginType, SignupType } from '@lib/types/user';
 import axios from 'axios';
-import instance from './instance';
-
-/**
- * 로그인하기
- * @param id 유저 아이디
- * @param password 비밀번호
- */
+import RestAPI from './restapi';
 
 class UserAPI {
+  /**
+   * 로그인하기
+   * @param id 유저 아이디
+   * @param password 비밀번호
+   */
   public async login(data: LoginType) {
     try {
-      const result = await instance.post('/auth/login', data, {
+      const result = await RestAPI.post('/auth/login', data, {
         headers: { 'X-Requested-With': 'JSONLoginHttpRequest' },
       });
 
@@ -39,7 +38,7 @@ class UserAPI {
    */
   public async signup(data: SignupType) {
     try {
-      const result = await instance.post('/auth/register', data);
+      const result = await RestAPI.post('/auth/register', data);
       console.log(result);
       return result;
     } catch (error) {
@@ -52,7 +51,7 @@ class UserAPI {
     // const accessToken = localStorage.getItem('accessToken')
     // const refreshToken = localStorage.getItem('accessToken');
     try {
-      const result = await instance.post('/auth/logout');
+      const result = await RestAPI.post('/auth/logout');
       console.log(result);
 
       localStorage.removeItem('accessToken');

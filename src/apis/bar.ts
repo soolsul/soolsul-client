@@ -1,11 +1,11 @@
 import { BarType } from '@lib/types';
-import instance from './instance';
+import RestAPI from './restapi';
 
 class BarAPI {
   public async getBarList(data: BarType.barSearchTyoe) {
     try {
       const { latitude, longitude, zoomLevel, moodTag, drinkTag } = data;
-      const result = await instance.get(
+      const result = await RestAPI.get(
         `/api/bars?latitude=${latitude}&longitude=${longitude}&level=${zoomLevel}&barMoodTagNames=${moodTag}&barAlcoholTagNames=${drinkTag}`
       );
       return result.data;
