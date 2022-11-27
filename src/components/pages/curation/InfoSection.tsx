@@ -14,6 +14,7 @@ function InfoSection({ category }: ISelectSectionProps) {
 
   const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
+    console.log(target.value);
     router.push(`/curation/detail/${target.value as CategoryType}`);
   };
   return (
