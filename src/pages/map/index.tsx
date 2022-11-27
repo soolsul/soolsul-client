@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { BottomMenu } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
-import { AddFeedButton, Error, SearchBar } from '@components/pages/map';
+import { AddFeedButton, Error, Header } from '@components/pages/map';
 import Property from '@lib/utils/Properties';
 import apis from '@apis/index';
 
@@ -40,10 +40,7 @@ function MapPage() {
             // lng: location.coords.longitude,
           }}
         >
-          <span style={{ position: 'fixed', top: '0', zIndex: '999', color: '#000' }}>
-            {location.coords.latitude} {location.coords.longitude}
-          </span>
-          <SearchBar />
+          <Header />
           {barList?.map((bar) => {
             return (
               <>

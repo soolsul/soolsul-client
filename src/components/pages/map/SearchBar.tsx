@@ -1,10 +1,12 @@
-import { Box } from "@components/common";
-import { TextInput } from "@components/Input";
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import { Box } from '@components/common';
+import { TextInput } from '@components/Input';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
+import searchIcon from '../../../assets/icons/search.svg';
 
 function SearchBar() {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const handleChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -12,7 +14,9 @@ function SearchBar() {
 
   return (
     <Wrapper>
-      <LogoBox position="left" />
+      <LogoBox position="left">
+        <Image src={searchIcon} />
+      </LogoBox>
       <SearchInput
         id="search-place"
         value={searchValue}
@@ -28,30 +32,31 @@ function SearchBar() {
 export default SearchBar;
 
 const Wrapper = styled.form`
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 500;
-  width: 90%;
+  width: 100%;
 `;
 
 const SearchInput = styled(TextInput)`
   width: 100%;
+  border-radius: 24px;
+  background: #f5f5f5;
+  border: 1px solid;
 `;
 
-const LogoBox = styled(Box)<{ position: "left" | "right" }>`
+const LogoBox = styled(Box)<{ position: 'left' | 'right' }>`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   margin: 0 8px;
+  background: #f5f5f5;
   ${({ position }) => {
     switch (position) {
-      case "left":
+      case 'left':
         return css`
           left: 8px;
         `;
-      case "right":
+      case 'right':
         return css`
           right: 8px;
         `;
