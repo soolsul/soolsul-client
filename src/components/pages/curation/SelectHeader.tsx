@@ -15,7 +15,7 @@ function SelectHeader({ category, handleClickButton }: ISelectHeaderProps) {
         정보
       </CategoryButton>
       <CategoryButton value="review" onClick={handleClickButton} isActive={category === 'review'}>
-        리뷰
+        피드
       </CategoryButton>
     </CategorySection>
   );
