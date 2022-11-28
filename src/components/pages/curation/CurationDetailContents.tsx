@@ -1,13 +1,9 @@
 import styled from 'styled-components';
 
-// interface ICurationProps {
-//   onClick: (e: React.MouseEvent<HTMLElement>) => void;
-// }
-
 function CurationDetailContents() {
   return (
     <Wrapper>
-      <h2>부타이제2막</h2>
+      <h2>드므</h2>
       <p>을지로</p>
       <p className="description">포스트 내용 포스트 내용 포스트 내용 포스트 내용 포스트 내용 포스트 내용 포스트 내용</p>
     </Wrapper>

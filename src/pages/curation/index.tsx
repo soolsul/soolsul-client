@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BottomMenu, CommonWrapper } from '@components/common';
+import { BottomMenu, Box, CommonWrapper } from '@components/common';
 import { CurationItem } from '@components/pages/curation';
 import { useRouter } from 'next/router';
 
@@ -9,17 +9,18 @@ function Curation() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/curation/detail');
+    router.push('/curation/detail/info');
   };
 
   return (
     <Wrapper>
       <div className="contentsContainer">
-        <h1>큐레이션 페이지</h1>
+        <h1>Soolsul 의 추천 맛집</h1>
         <ul>
           <CurationItem onClick={handleClick} />
           <CurationItem onClick={handleClick} />
         </ul>
+        <Box />
       </div>
       <BottomMenu />
     </Wrapper>

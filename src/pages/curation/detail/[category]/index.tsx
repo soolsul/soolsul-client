@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { BottomMenu, Line } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
 import { CurationDetailContents } from '@components/pages/curation';
@@ -9,15 +8,15 @@ import { useRouter } from 'next/router';
 
 type CategoryType = 'info' | 'review';
 function Detail() {
-  const imageSrc = 'https://ifh.cc/g/LLgls5.jpg';
+  const imageSrc = 'https://ifh.cc/g/cLxwJ4.jpg';
   const [category, setCategory] = useState<CategoryType>('info');
   const router = useRouter();
+  console.log(router);
 
   useEffect(() => {
-    try {
+    if (router.query.category) {
       setCategory(router.query.category as CategoryType);
-    } catch (err) {
-      alert(err);
+    } else {
       setCategory('info');
     }
   }, [router]);

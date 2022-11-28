@@ -8,13 +8,14 @@ interface ICurationProps {
 }
 
 function CurationItem({ onClick }: ICurationProps) {
-  const imageSrc = 'https://ifh.cc/g/LLgls5.jpg';
+  const imageSrc = 'https://ifh.cc/g/cLxwJ4.jpg';
 
   return (
     <PostItemWrapper onClick={onClick}>
+      <div className="coverBox"></div>
       <CurationImage src={imageSrc} />
       <ContentBox>
-        <p className="title">부타이제2막</p>
+        <p className="title">드므</p>
         <ul>
           <TagItem />
           <TagItem />
@@ -36,6 +37,14 @@ const PostItemWrapper = styled.li`
   margin: 16px 0;
   border-radius: 20px;
   position: relative;
+
+  .coverBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.8));
+    border-radius: 20px;
+  }
 `;
 
 const CurationImage = styled.img`
@@ -51,18 +60,19 @@ const ContentBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   position: absolute;
-  background: #e9e8e88b;
-  bottom: 40px;
+  bottom: 20px;
   padding: 10px 24px;
+  color: #fff;
 
   .title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 500;
   }
 
   ul {
     display: flex;
     padding: 8px 0;
+    color: #000;
   }
 
   .description {
