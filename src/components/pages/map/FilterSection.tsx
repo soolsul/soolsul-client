@@ -52,15 +52,3 @@ const FilterList = styled.ul<{ filterType: 'mood' | 'drink' }>`
     }
   }}
 `;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 14px 0;
-`;
