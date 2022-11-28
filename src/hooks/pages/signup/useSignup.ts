@@ -1,6 +1,6 @@
-import { signup } from '@apis/users';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import apis from '@apis/index';
 
 export default function useSignup() {
   const [data, setData] = useState({
@@ -58,7 +58,8 @@ export default function useSignup() {
       alert('가입 정보를 다  채워주세요');
     } else {
       console.log('제출!');
-      await signup(data)
+      await apis.user
+        .signup(data)
         .then((res) => {
           console.log(res);
           router.push('map');
