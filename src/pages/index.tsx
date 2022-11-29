@@ -1,9 +1,12 @@
-import { CommonButton, CommonWrapper } from '@components/common';
+import { CommonWrapper } from '@components/common';
+import CommonBtn from '@components/common/CommonBtn';
 import type { NextPage } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Splash from './splash';
+import wineImg from '@assets/images/wine.png';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -35,9 +38,12 @@ const Home: NextPage = () => {
       ) : (
         <>
           <HomeContainer>
-            <div className="logo">LOGO</div>
+            <div className="logo">
+              <Image src={wineImg} width={'200px'} height={'200px'} />
+            </div>
             <div className="buttonBox">
               <CommonBtn
+                active={false}
                 onClick={() => {
                   router.push('map');
                 }}
@@ -64,21 +70,19 @@ export default Home;
 const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
 `;
-
 const HomeContainer = styled.div`
-  display: flex;
   height: 100vh;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   .logo {
     margin: 3rem;
     width: 13rem;
     height: 13rem;
-    background: #e6e6e6;
+    // background: #e6e6e6;
     text-align: center;
-    position: absolute;
-    top: 13rem;
   }
 
   .buttonBox {
@@ -87,22 +91,7 @@ const HomeContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 6rem;
+    margin-top: 4rem;
+    padding: 20px;
   }
-
-  button {
-    width: 358px;
-    border-radius: 25px;
-    border: none;
-    background: #5f3dc4;
-    color: #fff;
-    font-weight: 700;
-    font-size: 14px;
-    height: 52px;
-  }
-`;
-
-const CommonBtn = styled(CommonButton)`
-  margin: 10px 0px;
 `;

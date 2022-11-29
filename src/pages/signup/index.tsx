@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { CommonButton, CommonWrapper, Header } from '@components/common';
+import { CommonWrapper } from '@components/common';
 import { LoginInput } from '@components/pages/login';
 import useSignup from '@hooks/pages/signup/useSignup';
+import CommonBtn from '@components/common/CommonBtn';
+import { useRouter } from 'next/router';
 
 function Signup() {
-  const { data, invalidText, errorPart, handleSignSubmit, handleInputValue } = useSignup();
-  console.log(data);
-  console.log(errorPart, invalidText);
+  const router = useRouter();
+  const { data, hasChanged, invalidText, errorPart, handleSignSubmit, handleInputValue } = useSignup();
+
+  const checkAllDataFilled = () => {
+    return Object.values(data).includes('');
+  };
+
+  const handleBeforeunload = (e: BeforeUnloadEvent) => {
+    if (hasChanged) {
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+    return undefined;
+  };
+
+  const backPrevPage = () => {
+    // 이전 페이지로 이동
+    router.back();
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeunload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeunload);
+    };
+  }, [hasChanged]);
 
   return (
     <Wrapper>
-      <Header title={'회원가입'} />
+      <HeaderWrapper>
+        <button className="backButtonIcon" onClick={backPrevPage} />
+        <p>회원가입</p>
+      </HeaderWrapper>
+
       <LoginContainer>
         <LoginInput
           id="email"
@@ -68,7 +98,11 @@ function Signup() {
           invalidText={invalidText}
           errorPart={errorPart}
         />
-        <CommonBtn onClick={handleSignSubmit}>로그인</CommonBtn>
+        <div className="buttonBox">
+          <CommonBtn active={checkAllDataFilled() ? false : true} onClick={handleSignSubmit}>
+            회원가입
+          </CommonBtn>
+        </div>
       </LoginContainer>
     </Wrapper>
   );
@@ -78,20 +112,41 @@ export default Signup;
 
 const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
+  height: 100%;
+`;
+
+const HeaderWrapper = styled.div`
+  border-bottom: 1px solid #d9d9d9;
+  width: 100%;
+  padding: 13px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    position: absolute;
+    left: 10px;
+    padding: 10px;
+    background-color: pink;
+    border: none;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+  }
 `;
 
 const LoginContainer = styled.div`
   display: flex;
-  height: 100vh;
   flex-direction: column;
-  padding: 20px 16px;
-  // justify-content: start;
-  // align-items: center;
-`;
+  padding: 16px;
+  overflow-y: auto;
 
-const CommonBtn = styled(CommonButton)`
-  position: absolute;
-  bottom: 2rem;
-  margin: 1rem auto;
-  width: 90%;
+  .buttonBox {
+    width: 100%;
+    margin: 2rem 0;
+  }
 `;

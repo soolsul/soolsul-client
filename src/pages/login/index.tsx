@@ -1,21 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CommonButton, CommonWrapper } from '@components/common';
+import { CommonWrapper } from '@components/common';
 import { LoginInput } from '@components/pages/login';
 import { useLogin } from '@hooks/pages/login';
+import useValidation from '@hooks/common/useValidation';
+import CommonBtn from '@components/common/CommonBtn';
+import { useRouter } from 'next/router';
 
 function Login() {
+  const router = useRouter();
   const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
+  const { checkEmailValidation } = useValidation();
   const { email, password } = loginInfo;
-
-  console.log(Object.values(loginInfo).includes(''));
 
   const handleClick = () => {
     if (Object.values(loginInfo).includes('')) {
       alert('로그인에 필요한 모든 정보를 입력해주세요');
+    } else if (checkEmailValidation(email) === false) {
+      alert('이메일 형식이 잘못되었습니다');
     } else {
       handleLoginSubmit();
     }
+  };
+
+  const moveToSignup = () => {
+    router.push('searchAddress');
   };
 
   return (
@@ -40,7 +49,12 @@ function Login() {
           invalidText={''}
           errorPart={'password'}
         />
-        <CommonBtn onClick={handleClick}>로그인</CommonBtn>
+        <div className="buttonBox">
+          <CommonBtn onClick={handleClick}>로그인</CommonBtn>
+          <CommonBtn onClick={moveToSignup} active={false}>
+            회원가입
+          </CommonBtn>
+        </div>
       </LoginContainer>
     </Wrapper>
   );
@@ -57,7 +71,7 @@ const LoginContainer = styled.div`
   height: 100vh;
   flex-direction: column;
   justify-content: center;
-  padding: 16px;
+  padding: 20px;
 
   .logoBox {
     width: 100%;
@@ -66,9 +80,9 @@ const LoginContainer = styled.div`
     text-align: center;
     margin: 3rem auto;
   }
-`;
 
-const CommonBtn = styled(CommonButton)`
-  margin: 3rem auto;
-  width: 100%;
+  .buttonBox {
+    margin: 3rem auto;
+    width: 100%;
+  }
 `;

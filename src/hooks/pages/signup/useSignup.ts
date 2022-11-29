@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import apis from '@apis/index';
+import useValidation from '@hooks/common/useValidation';
 
 export default function useSignup() {
+  const router = useRouter();
+
+  const { checkEmailValidation, passwordValidation } = useValidation();
+
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -11,8 +16,7 @@ export default function useSignup() {
     name: '',
     nickname: '',
   });
-
-  const router = useRouter();
+  const [hasChanged, setHasChanged] = useState(false);
   const [invalidText, setInvalidText] = useState('');
   const [errorPart, setErrorPart] = useState('');
 
@@ -20,42 +24,26 @@ export default function useSignup() {
     const inputValue = e.target.value;
     const inputID = e.target.id;
 
+    setHasChanged(true);
     setData({
       ...data,
       [inputID]: inputValue,
     });
   };
 
-  // 이메일 형식 체크 함수
-  const checkEmailValidation = (email: string): boolean => {
-    const regex = /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
-    return regex.test(email);
-  };
-
-  // 비밀번호 유효성 검사 함수
-  const validation = (password: string): boolean => {
-    const passwordReg =
-      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-
-    const hasEveryCharacter = passwordReg.test(password);
-    const isLongerThanTen = password.length >= 10 ? true : false;
-
-    return hasEveryCharacter && isLongerThanTen;
-  };
-
   const handleSignSubmit = async () => {
     if (checkEmailValidation(data.email) === false) {
       // alert('이메일을 바르게 입력해주세요.');
-      setInvalidText('이메일을 바르게 입력해주세요.');
+      setInvalidText('올바른 이메일을 입력해주세요');
       setErrorPart('email');
-    } else if (validation(data.password) === false) {
+    } else if (passwordValidation(data.password) === false) {
       setInvalidText('10~16자 영문과 숫자, 특수문자를 조합해주세요.');
       setErrorPart('password');
     } else if (data.password !== data.confirmPassword) {
       setInvalidText('패스워드가 일치하지 않습니다.');
       setErrorPart('confirmPassword');
     } else if (Object.values(data).includes('')) {
-      alert('가입 정보를 다  채워주세요');
+      alert('가입 정보를 모두 채워주세요');
     } else {
       console.log('제출!');
       await apis.user
@@ -68,5 +56,5 @@ export default function useSignup() {
     }
   };
 
-  return { data, invalidText, errorPart, handleSignSubmit, handleInputValue };
+  return { data, hasChanged, invalidText, errorPart, handleSignSubmit, handleInputValue };
 }
