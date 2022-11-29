@@ -23,7 +23,7 @@ function LoginInput({ id, title, placeHolderText, onChange, value, invalidText, 
         alt={'입력창'}
         type={id.includes('password') || id.includes('confirmPassword') ? 'password' : ''}
       />
-      {id.includes('password') || id.includes('confirmPassword') ? <div className="iconBox" /> : null}
+      {/* {id.includes('password') || id.includes('confirmPassword') ? <div className="iconBox" /> : null} */}
       <p>{id === errorPart ? invalidText : null}</p>
     </Wrapper>
   );
@@ -36,24 +36,25 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 5px 0;
   margin: 5px;
-  position: relative;
+  height: 4.9rem;
 
   .title {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     font-size: 14px;
   }
   p {
     color: tomato;
     font-size: 11px;
+    margin-left: 6px;
   }
-  .iconBox {
-    width: 20px;
-    height: 20px;
-    background-color: pink;
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
-  }
+  // .iconBox {
+  //   width: 20px;
+  //   height: 20px;
+  //   background-color: pink;
+  //   position: absolute;
+  //   right: 10px;
+  //   bottom: 15px;
+  // }
 `;
 
 const Input = styled.input`
@@ -66,4 +67,8 @@ const Input = styled.input`
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 5px;
+
+  &::placeholder {
+    color: #bfbfbf;
+  }
 `;
