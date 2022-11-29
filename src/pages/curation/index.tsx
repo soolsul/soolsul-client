@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { BottomMenu, Box, CommonWrapper } from '@components/common';
 import { CurationItem } from '@components/pages/curation';
 import { useRouter } from 'next/router';
+import useGeoloaction from '@hooks/common/useGetCurrentLocation';
 
 function Curation() {
   const router = useRouter();
+  const { location } = useGeoloaction();
 
   const handleClick = () => {
     router.push('/curation/detail/info');
@@ -31,6 +33,7 @@ export default Curation;
 
 const Wrapper = styled(CommonWrapper)`
   padding: 20px;
+  background-color: #fff;
 
   h1 {
     margin: 30px 0;
@@ -40,6 +43,7 @@ const Wrapper = styled(CommonWrapper)`
     padding: 15px;
     height: 100%;
     overflow: auto;
+
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
