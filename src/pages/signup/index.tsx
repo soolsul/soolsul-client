@@ -1,48 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CommonWrapper } from '@components/common';
 import { LoginInput } from '@components/pages/login';
 import useSignup from '@hooks/pages/signup/useSignup';
 import CommonBtn from '@components/common/CommonBtn';
-import { useRouter } from 'next/router';
+import { createBrowserHistory } from 'history';
+import Modal from '@components/common/Modal';
 
 function Signup() {
-  const router = useRouter();
+  const history = createBrowserHistory();
+
   const { data, hasChanged, invalidText, errorPart, handleSignSubmit, handleInputValue } = useSignup();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const checkAllDataFilled = () => {
     return Object.values(data).includes('');
   };
 
-  const handleBeforeunload = (e: BeforeUnloadEvent) => {
-    if (hasChanged) {
-      e.preventDefault();
-      e.returnValue = '';
-      return '';
-    }
-    return undefined;
-  };
-
-  const backPrevPage = () => {
-    // 이전 페이지로 이동
-    router.back();
+  const handleMoveBack = () => {
+    setIsModalOpen(true);
   };
 
   useEffect(() => {
-    window.addEventListener('beforeunload', handleBeforeunload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeunload);
+    const listenBackEvent = () => {
+      setIsModalOpen(true);
     };
+
+    const unlistenHistoryEvent = history.listen(({ action }) => {
+      if (action === 'POP') {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
   }, [hasChanged]);
 
   return (
     <Wrapper>
       <HeaderWrapper>
-        <button className="backButtonIcon" onClick={backPrevPage} />
+        <button className="backButtonIcon" onClick={handleMoveBack} />
         <p>회원가입</p>
       </HeaderWrapper>
 
-      <LoginContainer>
+      <LoginContainer onSubmit={handleSignSubmit}>
         <LoginInput
           id="email"
           title={'이메일'}
@@ -99,11 +100,18 @@ function Signup() {
           errorPart={errorPart}
         />
         <div className="buttonBox">
-          <CommonBtn active={checkAllDataFilled() ? false : true} onClick={handleSignSubmit}>
+          <CommonBtn type="submit" active={checkAllDataFilled() ? false : true} onClick={handleSignSubmit}>
             회원가입
           </CommonBtn>
         </div>
       </LoginContainer>
+      {isModalOpen ? (
+        <Modal
+          content={`페이지를 벗어나면 입력한 내용이 모두 사라집니다. 이동하시겠습니까?`}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      ) : null}
     </Wrapper>
   );
 }
@@ -139,11 +147,12 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   display: flex;
   flex-direction: column;
   padding: 16px;
   overflow-y: auto;
+  height: 100vh;
 
   .buttonBox {
     width: 100%;

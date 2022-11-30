@@ -6,6 +6,8 @@ import { useLogin } from '@hooks/pages/login';
 import useValidation from '@hooks/common/useValidation';
 import CommonBtn from '@components/common/CommonBtn';
 import { useRouter } from 'next/router';
+import wineImg from '@assets/images/wine_horizontal.png';
+import Image from 'next/image';
 
 function Login() {
   const router = useRouter();
@@ -13,7 +15,8 @@ function Login() {
   const { checkEmailValidation } = useValidation();
   const { email, password } = loginInfo;
 
-  const handleClick = () => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     if (Object.values(loginInfo).includes('')) {
       alert('로그인에 필요한 모든 정보를 입력해주세요');
     } else if (checkEmailValidation(email) === false) {
@@ -29,8 +32,10 @@ function Login() {
 
   return (
     <Wrapper>
-      <LoginContainer>
-        <div className="logoBox">로고 마크</div>
+      <LoginContainer onSubmit={handleSubmit}>
+        <div className="logoBox">
+          <Image src={wineImg} height={'100px'} width={'260px'} />
+        </div>
         <LoginInput
           id="email"
           title={'이메일'}
@@ -49,12 +54,13 @@ function Login() {
           invalidText={''}
           errorPart={'password'}
         />
-        <div className="buttonBox">
-          <CommonBtn onClick={handleClick}>로그인</CommonBtn>
-          <CommonBtn onClick={moveToSignup} active={false}>
-            회원가입
-          </CommonBtn>
-        </div>
+        <div className="buttonBox"></div>
+        <CommonBtn type="submit" onSubmit={handleSubmit}>
+          로그인
+        </CommonBtn>
+        <CommonBtn onClick={moveToSignup} active={false}>
+          회원가입
+        </CommonBtn>
       </LoginContainer>
     </Wrapper>
   );
@@ -66,7 +72,7 @@ const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -74,11 +80,13 @@ const LoginContainer = styled.div`
   padding: 20px;
 
   .logoBox {
-    width: 100%;
-    height: 5rem;
-    background: #cec1f4;
     text-align: center;
-    margin: 3rem auto;
+    margin: 2.5rem auto;
+    border-radius: 20px;
+  }
+
+  Image {
+    border-radius: 20px;
   }
 
   .buttonBox {

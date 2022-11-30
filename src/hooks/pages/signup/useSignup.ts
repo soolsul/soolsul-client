@@ -31,7 +31,9 @@ export default function useSignup() {
     });
   };
 
-  const handleSignSubmit = async () => {
+  const handleSignSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
     if (checkEmailValidation(data.email) === false) {
       // alert('이메일을 바르게 입력해주세요.');
       setInvalidText('올바른 이메일을 입력해주세요');
