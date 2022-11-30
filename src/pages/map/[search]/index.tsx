@@ -26,26 +26,27 @@ function MapPage() {
     })();
   }, []);
 
-  if (!mapInfo || !myLocation || isLoading) {
-    return <Spinner />;
-  } else {
-    return (
-      <CommonWrapper>
-        <StyledMap center={{ ...mapInfo }} onBoundsChanged={handleBoundsChanged} isPanto={true} tileAnimation={true}>
-          <Header />
-          {barList?.map((bar) => {
-            return <Marker {...bar} name={bar.barName} />;
-          })}
-          <Marker latitude={myLocation.coords.latitude} longitude={myLocation.coords.longitude} name="현위치" />
-          <CurrentLocationButton onClick={handleClickCurrentLocation} />
-          <BottomMenu />
-          <FilterMenu />
-          <FeedMenu posts={posts} />
-        </StyledMap>
-        {filterState.isOpen && <Shadow />}
-      </CommonWrapper>
-    );
-  }
+  return (
+    <CommonWrapper>
+      <StyledMap center={{ ...mapInfo }} onBoundsChanged={handleBoundsChanged} isPanto={true} tileAnimation={true}>
+        <Header />
+        {barList?.map((bar) => {
+          return <Marker {...bar} name={bar.barName} />;
+        })}
+        <Marker latitude={myLocation!.coords.latitude} longitude={myLocation!.coords.longitude} name="현위치" />
+        <CurrentLocationButton onClick={handleClickCurrentLocation} />
+        <BottomMenu />
+        <FilterMenu />
+        {!isLoading && <FeedMenu posts={posts} />}
+      </StyledMap>
+      {filterState.isOpen && <Shadow />}
+      {(!mapInfo || !myLocation || isLoading) && (
+        <Shadow>
+          <Spinner />
+        </Shadow>
+      )}
+    </CommonWrapper>
+  );
 }
 
 export default dynamic(() => Promise.resolve(MapPage), { ssr: false });

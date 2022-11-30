@@ -2,13 +2,12 @@ import { PostType } from '@lib/types';
 import { uuid } from '@lib/utils';
 import { filterAtom } from '@recoil/map';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import styled, { css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PostItem from './PostItem';
 
 function FeedMenu({ posts }: { posts: PostType.PostType[] }) {
-  const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
   const foodList = ['전체', '한식', '중식', '양식', '일식', '기타'];
   const [filterState, setFilterState] = useRecoilState(filterAtom);
@@ -16,14 +15,13 @@ function FeedMenu({ posts }: { posts: PostType.PostType[] }) {
 
   const closeClickOutSide = (e: MouseEvent) => {
     if (!feedRef.current) return;
-    if (isOpen && !feedRef.current.contains(e.target as HTMLElement)) {
+    if (!feedRef.current.contains(e.target as HTMLElement)) {
       closeFilter();
     }
   };
 
   const closeFilter = () => {
     setFilterState({ drinkTag: '', moodTag: '', isOpen: false });
-    setIsOpen(false);
     router.push('/map');
   };
 
@@ -33,7 +31,7 @@ function FeedMenu({ posts }: { posts: PostType.PostType[] }) {
   }, [filterState.isOpen]);
 
   return (
-    <Wrapper isOpen={isOpen} ref={feedRef}>
+    <Wrapper ref={feedRef}>
       <Title>
         <FoodListWrapper>
           {foodList.map((food) => {
@@ -56,27 +54,25 @@ function FeedMenu({ posts }: { posts: PostType.PostType[] }) {
 
 export default FeedMenu;
 
-const Wrapper = styled.div<{ isOpen: boolean }>`
+const openMenu = keyframes`
+  from {
+    bottom: -100%;
+  }
+  to {
+    bottom: 0;
+  }
+`;
+
+const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
   background: #fafafa;
   z-index: 500;
-  transition: 0.5s;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 16px 16px 0px 0px;
   max-height: 80vh;
-  ${({ isOpen }) => {
-    if (isOpen) {
-      return css`
-        bottom: 0;
-      `;
-    } else {
-      return css`
-        bottom: -100%;
-      `;
-    }
-  }}
+  animation: ${openMenu} 0.5s;
 `;
 
 const Title = styled.header`
