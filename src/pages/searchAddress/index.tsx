@@ -6,28 +6,24 @@ import { useRouter } from 'next/router';
 import { Postcode } from '@components/pages/searchAddress/PostCode';
 import { TextInput } from '@components/Input';
 import searchIcon from '@assets/icons/search.svg';
+import checkIcon from '@assets/icons/check.svg';
 import Image from 'next/image';
-
-// ### **회원가입시 지역 인증 기능**
-// - 가입할 때 특정 지역(개발자님의 거주지역)에서 6km 이내에 위치하고 있는지 확인하고 맞으면 회원가입을 할 수 있고, 아니면 회원가입을 못하게 하는거예요!
-
-// ### 3) 회원가입정보 입력
-
-// 만약 중도에 뒤로가기 버튼을 누르거나 이탈하려고 할 경우 ‘회원가입을 종료하시겠습니까?’라는 문구가 뜹니다. ‘예’를 누르면 메인페이지로 돌아갑니다.
-// 정상적으로 입력해 회원가입이 완료되면 로그인 페이지로 이동하여 ‘회원가입이 완료되었습니다.’라는 문구가 뜹니다.
+// import useGetLocation from '@hooks/pages/signup/useGetLocation';
 
 function SearchAddress() {
   const router = useRouter();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [address, setAddress] = useState('');
+  const [jibunAddress, setJibunAddress] = useState('');
 
   const handleAddress = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  const moveToSignup = () => {
-    router.push('signup');
+  const moveToSignup = async () => {
+    if (!address) alert('동네를 인증해주세요');
+    else router.push('signup');
   };
 
   return (
@@ -39,16 +35,36 @@ function SearchAddress() {
         </h2>
         <div className="inputBox" onClick={handleAddress}>
           <SearchInput placeholder="내 동네를 검색해 보세요" />
-          <Image src={searchIcon} />
+          <div className="searchIcon">
+            <Image src={searchIcon} />
+          </div>
         </div>
-        {isPopupOpen && (
-          <div className="postCode">
-            <Postcode address={address} setAddress={setAddress} setIsPopupOpen={setIsPopupOpen} />
+
+        {address && (
+          <div className="address">
+            <div>
+              <p>{jibunAddress}</p>
+              <p className="roadAddress">( {address} )</p>
+            </div>
+            <div className="checkIcon">
+              <Image src={checkIcon} />
+            </div>
           </div>
         )}
-
+        {isPopupOpen && (
+          <div className="postCode">
+            <Postcode
+              address={address}
+              setAddress={setAddress}
+              setJibunAddress={setJibunAddress}
+              setIsPopupOpen={setIsPopupOpen}
+            />
+          </div>
+        )}
         <div className="buttonBox">
-          <CommonBtn onClick={moveToSignup}>동네 인증하기</CommonBtn>
+          <CommonBtn active={address ? true : false} onClick={moveToSignup}>
+            동네 인증하기
+          </CommonBtn>
         </div>
       </LoginContainer>
     </Wrapper>
@@ -59,15 +75,15 @@ export default SearchAddress;
 
 const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
-  height: 100%;
+  position: relative;
 `;
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  overflow-y: auto;
   height: 100vh;
+  margin: 1rem 0;
 
   h2 {
     font-weight: 400;
@@ -76,26 +92,63 @@ const LoginContainer = styled.div`
     letter-spacing: 0.15px;
   }
 
-  .buttonBox {
-    width: 100%;
-    margin: 2rem 0;
-  }
-
   .inputBox {
-    margin: 1rem 5px;
-    padding: 5px;
+    margin: 1rem auto;
+    width: 94%;
     display: flex;
     justify-content: center;
   }
-  Image {
-    margin: 0 3px;
+
+  .searchIcon {
+    margin: 0;
+    border-bottom: 1px solid #bfbfbf;
+    padding: 7px 0;
+  }
+
+  .address {
+    border-bottom: 1px solid #bfbfbf;
+    margin: 1rem auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+  }
+
+  .roadAddress {
+    font-size: 13;
+    color: #777;
+  }
+  .checkIcon {
+    margin: 0;
+    padding: 7px 0;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .postCode {
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+    top: 8px;
+    left: -5px;
+    width: 102%;
+  }
+
+  .buttonBox {
+    width: 92%;
+    position: absolute;
+    bottom: 2rem;
   }
 `;
 
 const SearchInput = styled(TextInput)`
-  width: 90%;
+  width: 100%;
   border-radius: 0px;
   border: none;
   border-bottom: 1px solid #bfbfbf;
-  padding: 6px 1px;
+  padding: 13px 1px;
 `;
