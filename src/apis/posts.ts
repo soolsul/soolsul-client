@@ -1,5 +1,6 @@
-import { BarType } from '@lib/types';
+import { BarType, PostType } from '@lib/types';
 import RestAPI from './restapi';
+import APIResponse from './type/response';
 
 class PostAPI {
   /**
@@ -8,13 +9,13 @@ class PostAPI {
    * @param longitude
    * @param zoomLevel
    */
-  public async getFeeds(data: BarType.barSearchTyoe) {
+  public async getFeeds(data: BarType.barSearchTyoe & { pages?: number }) {
     try {
-      const { latitude, longitude, zoomLevel = 6 } = data;
+      const { latitude, longitude, zoomLevel = 6, pages = 0 } = data;
       const result = await RestAPI.get(
-        `/api/posts?latitude=${latitude}&longitude=${longitude}&level=${zoomLevel}&page=${0}`
+        `/api/posts?latitude=${latitude}&longitude=${longitude}&level=${zoomLevel}&page=${pages}`
       );
-      return result.data;
+      return result.data as APIResponse<{ postList: PostType.PostType[] }>;
     } catch (error) {
       console.log(error);
     }
