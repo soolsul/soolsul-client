@@ -112,7 +112,7 @@ const FoodListWrapper = styled.ul`
 
 const FoodButton = styled.button`
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px 12px;
   border-radius: 26px;
   border: 1px solid #f0f0f0;
   background-color: #fff;

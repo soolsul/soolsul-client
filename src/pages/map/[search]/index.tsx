@@ -3,28 +3,31 @@ import { Map } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import { BottomMenu } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
-import { Marker, CurrentLocationButton, Error, Header, FilterMenu, FeedMenu } from '@components/pages/map';
+import { Marker, CurrentLocationButton, Header, FilterMenu, FeedMenu } from '@components/pages/map';
 import { useMap } from '@hooks/pages/map';
 import { useRecoilValue } from 'recoil';
 import { filterAtom } from '@recoil/map';
 import { useEffect, useState } from 'react';
 import apis from '@apis/index';
 import { PostType } from '@lib/types';
+import { Spinner } from '@components/Loader';
 
 function MapPage() {
   const filterState = useRecoilValue(filterAtom);
   const [posts, setPosts] = useState<PostType.PostType[]>([]);
   const { barList, mapInfo, myLocation, handleBoundsChanged, handleClickCurrentLocation } = useMap();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const result = await apis.posts.getFeeds({ latitude: 37.565314, longitude: 126.992646, pages: 0 });
       setPosts(result!.data.postList);
+      setIsLoading(false);
     })();
   }, []);
 
-  if (!mapInfo || !myLocation) {
-    return <Error />;
+  if (!mapInfo || !myLocation || isLoading) {
+    return <Spinner />;
   } else {
     return (
       <CommonWrapper>

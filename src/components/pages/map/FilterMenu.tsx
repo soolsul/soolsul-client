@@ -147,7 +147,7 @@ const LogoBox = styled.button`
   transform: translateY(-50%);
   background: #fff;
   left: 16px;
-  border: 1px solid;
+  border: 1px solid #fff;
   cursor: pointer;
 `;
 
