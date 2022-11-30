@@ -1,8 +1,9 @@
+import { Shadow } from '@components/common';
 import { uuid } from '@lib/utils';
 import { filterAtom } from '@recoil/map';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 import closeImg from '../../../assets/icons/close.svg';
@@ -12,6 +13,7 @@ function FilterMenu() {
   const router = useRouter();
   const [filterState, setFilterState] = useRecoilState(filterAtom);
   const filterRef = useRef<HTMLDivElement>(null);
+  const [isSubmit, setIsSubmit] = useState(false);
   const moodList = ['시끌벅적한', '고급스러운', '격식있는', '이색적인', '깔끔한', '조용한', '뷰가 이쁜'];
   const drinkList = ['소주', '맥주', '와인', '칵테일', '샴페인', '위스키', '사케', '기타'];
 
@@ -29,6 +31,7 @@ function FilterMenu() {
   const handleSubmit = () => {
     router.push(`/map/search?mood=${filterState.moodTag}&drink=${filterState.drinkTag}`);
     closeFilter();
+    setIsSubmit(true);
   };
 
   useEffect(() => {
@@ -88,6 +91,7 @@ function FilterMenu() {
           적용
         </Button>
       </ButtonWrapper>
+      {isSubmit && <Shadow isLoading={true} />}
     </Wrapper>
   );
 }
