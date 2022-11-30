@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Map } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
-import { BottomMenu } from '@components/common';
+import { BottomMenu, Shadow } from '@components/common';
 import { CommonWrapper } from '@components/common/commonStyle';
 import { Marker, CurrentLocationButton, Header, FilterMenu, FeedMenu } from '@components/pages/map';
 import { useMap } from '@hooks/pages/map';
@@ -10,7 +10,6 @@ import { filterAtom } from '@recoil/map';
 import { useEffect, useState } from 'react';
 import apis from '@apis/index';
 import { PostType } from '@lib/types';
-import { Spinner } from '@components/Loader';
 
 function MapPage() {
   const filterState = useRecoilValue(filterAtom);
@@ -40,11 +39,7 @@ function MapPage() {
         {!isLoading && <FeedMenu posts={posts} />}
       </StyledMap>
       {filterState.isOpen && <Shadow />}
-      {(!mapInfo || !myLocation || isLoading) && (
-        <Shadow>
-          <Spinner />
-        </Shadow>
-      )}
+      {(!mapInfo || !myLocation || isLoading) && <Shadow isLoading={true} />}
     </CommonWrapper>
   );
 }
@@ -55,13 +50,4 @@ const StyledMap = styled(Map)`
   height: 100%;
   width: 100%;
   transition: 0.5s;
-`;
-
-const Shadow = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 400;
-  background-color: #272727a1;
 `;
