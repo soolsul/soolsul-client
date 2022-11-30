@@ -99,7 +99,7 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   width: 100%;
   background: #fafafa;
-  z-index: 500;
+  z-index: 600;
   transition: 0.5s;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 16px 16px 0px 0px;
