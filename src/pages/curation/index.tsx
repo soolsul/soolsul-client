@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { BottomMenu, Box, CommonWrapper } from '@components/common';
 import { CurationItem } from '@components/pages/curation';
 import { useRouter } from 'next/router';
-import useGeoloaction from '@hooks/common/useGetCurrentLocation';
+import { useCuration } from '@hooks/pages/curation';
 
 function Curation() {
   const router = useRouter();
-  const { location } = useGeoloaction();
+  const { curationData } = useCuration();
+  console.log(curationData);
 
   const handleClick = () => {
     router.push('/curation/detail/info');

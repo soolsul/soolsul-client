@@ -20,7 +20,6 @@ function CurationItem({ onClick }: ICurationProps) {
           <TagItem />
           <TagItem />
         </ul>
-        <p className="description">포스트 내용 포스트 내용 포스트 내용 포스트 내용</p>
       </ContentBox>
       <StoreBtnBox>
         <StoreIcon src={storeImg} width={'16px'} />
@@ -43,7 +42,7 @@ const PostItemWrapper = styled.li`
     width: 100%;
     height: 100%;
     background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.8));
-    border-radius: 20px;
+    border-radius: 16px;
   }
 `;
 
@@ -73,10 +72,6 @@ const ContentBox = styled.div`
     display: flex;
     padding: 8px 0;
     color: #000;
-  }
-
-  .description {
-    font-size: 16px;
   }
 `;
 
