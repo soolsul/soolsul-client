@@ -1,6 +1,7 @@
 import { uuid } from '@lib/utils';
 import { filterAtom } from '@recoil/map';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
@@ -8,6 +9,7 @@ import closeImg from '../../../assets/icons/close.svg';
 import FilterSection from './FilterSection';
 
 function FilterMenu() {
+  const router = useRouter();
   const [filterState, setFilterState] = useRecoilState(filterAtom);
   const filterRef = useRef<HTMLDivElement>(null);
   const moodList = ['시끌벅적한', '고급스러운', '격식있는', '이색적인', '깔끔한', '조용한', '뷰가 이쁜'];
@@ -21,7 +23,12 @@ function FilterMenu() {
   };
 
   const closeFilter = () => {
-    setFilterState({ drinkTag: null, moodTag: null, isOpen: false });
+    setFilterState({ drinkTag: '', moodTag: '', isOpen: false });
+  };
+
+  const handleSubmit = () => {
+    router.push(`/map/search?mood=${filterState.moodTag}&drink=${filterState.drinkTag}`);
+    closeFilter();
   };
 
   useEffect(() => {
@@ -77,7 +84,7 @@ function FilterMenu() {
         <Button className="cancel" onClick={closeFilter}>
           취소
         </Button>
-        <Button className="submit" onClick={closeFilter}>
+        <Button className="submit" onClick={handleSubmit}>
           적용
         </Button>
       </ButtonWrapper>

@@ -1,11 +1,13 @@
 import apis from '@apis/index';
 import Property from '@lib/utils/Properties';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const useMap = () => {
   const [barList, setBarList] = useState<any[] | null>(null);
   const [mapInfo, setMapInfo] = useState<{ lat: number; lng: number }>({ lat: 37.565314, lng: 126.992646 });
   const [myLocation, setMyLocation] = useState<GeolocationPosition | null>(Property.userInfo.location);
+  const router = useRouter();
 
   const handleBoundsChanged = (map: any) => {
     const center = map.getCenter();
@@ -35,10 +37,16 @@ const useMap = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await apis.bar.getBarList({ latitude: 37.565314, longitude: 126.992646 });
+      const { mood: moodTag, drink: drinkTag } = router.query as { mood?: string; drink?: string };
+      const result = await apis.bar.getBarList({
+        latitude: 37.565314,
+        longitude: 126.992646,
+        moodTag,
+        drinkTag,
+      });
       setBarList(result.data.barList);
     })();
-  }, []);
+  }, [router.query]);
 
   return { barList, mapInfo, myLocation, handleBoundsChanged, handleClickCurrentLocation };
 };
