@@ -7,7 +7,7 @@ export type SignupType = {
   email: string;
   password: string;
   name: string;
-  phoneNumber: string;
+  phone: string;
   nickname: string; // nickname unique
 };
 

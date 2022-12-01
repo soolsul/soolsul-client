@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface IInputProps {
-  id: 'email' | 'password' | 'confirmPassword' | 'phoneNumber' | 'name' | 'nickname';
+  id: 'email' | 'password' | 'confirmPassword' | 'phone' | 'name' | 'nickname';
   title: string;
   placeHolderText: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

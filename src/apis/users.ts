@@ -38,7 +38,7 @@ class UserAPI {
    */
   public async signup(data: SignupType) {
     try {
-      const result = await RestAPI.post('/auth/register', data);
+      const result = await RestAPI.post('/api/auth/register', data);
       console.log(result);
       return result;
     } catch (error) {

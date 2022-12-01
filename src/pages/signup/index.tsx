@@ -72,11 +72,11 @@ function Signup() {
           errorPart={errorPart}
         />
         <LoginInput
-          id="phoneNumber"
+          id="phone"
           title={'전화번호'}
           placeHolderText={'010-0000-0000'}
           onChange={handleInputValue}
-          value={data.phoneNumber}
+          value={data.phone}
           invalidText={invalidText}
           errorPart={errorPart}
         />

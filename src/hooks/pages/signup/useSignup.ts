@@ -12,7 +12,7 @@ export default function useSignup() {
     email: '',
     password: '',
     confirmPassword: '',
-    phoneNumber: '',
+    phone: '',
     name: '',
     nickname: '',
   });
@@ -49,7 +49,7 @@ export default function useSignup() {
     } else {
       console.log('제출!');
       await apis.user
-        .signup(data)
+        .signup({ ...data })
         .then((res) => {
           console.log(res);
           router.push('map');
