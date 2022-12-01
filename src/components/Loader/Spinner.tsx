@@ -1,16 +1,18 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export function Spinner() {
   return <StyledSpinner />;
 }
 
 const StyledSpinner = styled.div`
-  margin: 100px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 15px;
   width: 1em;
   height: 1em;
   border-radius: 50%;
-  position: relative;
   text-indent: -9999em;
   -webkit-animation: load5 1.1s infinite ease;
   animation: load5 1.1s infinite ease;

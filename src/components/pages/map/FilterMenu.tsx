@@ -1,14 +1,21 @@
+import { Shadow } from '@components/common';
+import { uuid } from '@lib/utils';
 import { filterAtom } from '@recoil/map';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 import closeImg from '../../../assets/icons/close.svg';
 import FilterSection from './FilterSection';
 
 function FilterMenu() {
+  const router = useRouter();
   const [filterState, setFilterState] = useRecoilState(filterAtom);
   const filterRef = useRef<HTMLDivElement>(null);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const moodList = ['시끌벅적한', '고급스러운', '격식있는', '이색적인', '깔끔한', '조용한', '뷰가 이쁜'];
+  const drinkList = ['소주', '맥주', '와인', '칵테일', '샴페인', '위스키', '사케', '기타'];
 
   const closeClickOutSide = (e: MouseEvent) => {
     if (!filterRef.current) return;
@@ -18,13 +25,20 @@ function FilterMenu() {
   };
 
   const closeFilter = () => {
-    setFilterState({ ...filterState, isOpen: false });
+    setFilterState({ drinkTag: '', moodTag: '', isOpen: false });
+  };
+
+  const handleSubmit = () => {
+    router.push(`/map/search?mood=${filterState.moodTag}&drink=${filterState.drinkTag}`);
+    closeFilter();
+    setIsSubmit(true);
   };
 
   useEffect(() => {
     document.addEventListener('click', closeClickOutSide);
     return () => document.removeEventListener('click', closeClickOutSide);
   }, [filterState.isOpen]);
+
   return (
     <Wrapper {...filterState} ref={filterRef}>
       <Title>
@@ -35,28 +49,49 @@ function FilterMenu() {
       </Title>
       <SectionWrapper>
         <FilterSection filterType="mood">
-          <MoodFilter>시끌벅적한</MoodFilter>
-          <MoodFilter>고급스러운</MoodFilter>
-          <MoodFilter>격식있는</MoodFilter>
-          <MoodFilter>이색적인</MoodFilter>
-          <MoodFilter>깔끔한</MoodFilter>
-          <MoodFilter>조용한</MoodFilter>
-          <MoodFilter>뷰가 예쁜</MoodFilter>
+          {moodList.map((mood) => {
+            return (
+              <MoodFilter key={uuid()} isActive={filterState.moodTag === mood}>
+                <button
+                  value={mood}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFilterState({ ...filterState, moodTag: mood });
+                  }}
+                >
+                  {mood}
+                </button>
+              </MoodFilter>
+            );
+          })}
         </FilterSection>
         <FilterSection filterType="drink">
-          <DrinkFilter />
-          <DrinkFilter />
-          <DrinkFilter />
-          <DrinkFilter />
-          <DrinkFilter />
+          {drinkList.map((drink) => {
+            return (
+              <DrinkFilter key={uuid()} isActive={filterState.drinkTag === drink}>
+                <button
+                  value={drink}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFilterState({ ...filterState, drinkTag: drink });
+                  }}
+                >
+                  {drink}
+                </button>
+              </DrinkFilter>
+            );
+          })}
         </FilterSection>
       </SectionWrapper>
       <ButtonWrapper>
         <Button className="cancel" onClick={closeFilter}>
           취소
         </Button>
-        <Button className="submit">적용</Button>
+        <Button className="submit" onClick={handleSubmit}>
+          적용
+        </Button>
       </ButtonWrapper>
+      {isSubmit && <Shadow isLoading={true} />}
     </Wrapper>
   );
 }
@@ -68,7 +103,7 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   width: 100%;
   background: #fafafa;
-  z-index: 500;
+  z-index: 600;
   transition: 0.5s;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 16px 16px 0px 0px;
@@ -116,7 +151,7 @@ const LogoBox = styled.button`
   transform: translateY(-50%);
   background: #fff;
   left: 16px;
-  border: 1px solid;
+  border: 1px solid #fff;
   cursor: pointer;
 `;
 
@@ -124,22 +159,66 @@ const SectionWrapper = styled.div`
   padding: 16px;
 `;
 
-const DrinkFilter = styled.li`
+const DrinkFilter = styled.li<{ isActive: boolean }>`
   aspect-ratio: 1/1;
   background-color: #fff;
   border: 1px solid #f0f0f0;
   border-radius: 50%;
+  button {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: #000;
+    cursor: pointer;
+    &:hover {
+      color: #715ae4;
+      border: 1px solid #715ae4;
+    }
+    ${({ isActive }) => {
+      if (isActive) {
+        return css`
+          border: 1px solid #715ae4;
+          color: #715ae4;
+        `;
+      } else {
+        return css`
+          border: 1px solid #f0f0f0;
+          color: #000;
+        `;
+      }
+    }}
+  }
 `;
 
-const MoodFilter = styled.li`
-  padding: 8px 16px;
-  border: 1px solid #f0f0f0;
-  background-color: #fff;
-  border-radius: 24px;
-  color: #000;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
+const MoodFilter = styled.li<{ isActive: boolean }>`
+  button {
+    padding: 8px 16px;
+    background-color: #fff;
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #715ae4;
+      color: #715ae4;
+    }
+    ${({ isActive }) => {
+      if (isActive) {
+        return css`
+          border: 1px solid #715ae4;
+          color: #715ae4;
+        `;
+      } else {
+        return css`
+          border: 1px solid #f0f0f0;
+          color: #000;
+        `;
+      }
+    }}
+  }
 `;
 
 const ButtonWrapper = styled.div`
