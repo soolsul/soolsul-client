@@ -8,11 +8,10 @@ import CommonBtn from '@components/common/CommonBtn';
 import { useRouter } from 'next/router';
 import wineImg from '@assets/images/wine_horizontal.png';
 import Image from 'next/image';
-import { LoadingComponent } from '@components/common/Loading';
 
 function Login() {
   const router = useRouter();
-  const { isLoading, loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
+  const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
   const { checkEmailValidation } = useValidation();
   const { email, password } = loginInfo;
 
@@ -33,7 +32,6 @@ function Login() {
 
   return (
     <Wrapper>
-      {isLoading && <LoadingComponent />}
       <LoginContainer onSubmit={handleSubmit}>
         <div className="logoBox">
           <Image src={wineImg} height={'100px'} width={'260px'} />
