@@ -11,7 +11,7 @@ class CurationAPI {
   public async getCurationList(data: curationType.curationListTyoe) {
     try {
       const { latitude, longitude, level } = data;
-      const result = await RestAPI.get(`/api/curation?latitude=${latitude}&longitude=${longitude}&level=${level}`);
+      const result = await RestAPI.get(`/api/curations?latitude=${latitude}&longitude=${longitude}&level=${level}`);
       return result.data;
     } catch (error) {
       console.log(error);

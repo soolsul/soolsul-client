@@ -41,6 +41,7 @@ const Wrapper = styled(CommonWrapper)`
     /* padding: 15px; */
     height: 100%;
     overflow: auto;
+    background-color: #fff;
   }
 `;
 
