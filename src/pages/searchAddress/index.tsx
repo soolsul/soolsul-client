@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CommonWrapper, Header } from '@components/common';
 import CommonBtn from '@components/common/CommonBtn';
@@ -8,7 +8,6 @@ import { TextInput } from '@components/Input';
 import searchIcon from '@assets/icons/search.svg';
 import checkIcon from '@assets/icons/check.svg';
 import Image from 'next/image';
-// import useGetLocation from '@hooks/pages/signup/useGetLocation';
 
 function SearchAddress() {
   const router = useRouter();
@@ -16,15 +15,93 @@ function SearchAddress() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [address, setAddress] = useState('');
   const [jibunAddress, setJibunAddress] = useState('');
+  const [myLocation, setMyLocation] = useState({
+    coords: {
+      latitude: 37.565314,
+      longitude: 126.992646,
+    },
+  });
+  const [coords, setCoords] = useState({
+    latitude: 37.565314,
+    longitude: 126.992646,
+  });
+
+  console.log('내위치', myLocation);
+  console.log('검색 위치', coords);
+
+  const getCoords = () => {
+    kakao.maps.load(() => {
+      const services = kakao.maps.services;
+      if (!services) {
+        console.log('kakao.maps.services 를 찾을 수 없음 :', kakao.maps);
+        return;
+      } else {
+        const geocoder = new services.Geocoder();
+        console.log(geocoder);
+
+        const callback = function (result: any, status: any) {
+          if (status === kakao.maps.services.Status.OK) {
+            console.log('좌표 결과 데이터', result[0].x, result[0].y);
+            setCoords({ latitude: result[0].y, longitude: result[0].x });
+          }
+        };
+        geocoder.addressSearch(address, callback);
+      }
+    });
+  };
+
+  const getMyLocation = () => {
+    window.navigator.geolocation.getCurrentPosition((position) => {
+      setMyLocation(position);
+    });
+  };
+
+  function getPlaceLength() {
+    return new Promise((resolve, reject) => {
+      if (!address) alert('동네를 인증해주세요');
+      try {
+        kakao.maps.load(() => {
+          const poly = new kakao.maps.Polyline({
+            path: [
+              new kakao.maps.LatLng(coords.latitude, coords.longitude),
+              new kakao.maps.LatLng(myLocation.coords.latitude, myLocation.coords.longitude),
+            ],
+          });
+          console.log(new kakao.maps.LatLng(coords.latitude, coords.longitude));
+          console.log(new kakao.maps.LatLng(myLocation.coords.latitude, myLocation.coords.longitude));
+          console.log('거리계산', poly.getLength());
+
+          const polyLength = poly.getLength();
+          console.log(polyLength < 6000);
+          resolve(polyLength);
+        });
+      } catch (err) {
+        console.log('거리를 받아오지 못했습니다.', err);
+        reject();
+      }
+    });
+  }
+
+  const checkNeighborhood = async () => {
+    const length = await getPlaceLength();
+
+    if (length > 6000) {
+      alert('검색한 동네가 현재 사용자의 위치와 6km 이상 떨어져 있습니다. 더 가까운 동네를 검색해주세요');
+    } else {
+      alert('동네 인증이 완료되었습니다.');
+      router.push('signup');
+    }
+  };
 
   const handleAddress = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  const moveToSignup = async () => {
-    if (!address) alert('동네를 인증해주세요');
-    else router.push('signup');
-  };
+  useEffect(() => {
+    getMyLocation();
+    if (!address) return;
+    getCoords();
+  }, [address]);
 
   return (
     <Wrapper>
@@ -62,7 +139,7 @@ function SearchAddress() {
           </div>
         )}
         <div className="buttonBox">
-          <CommonBtn active={address ? true : false} onClick={moveToSignup}>
+          <CommonBtn active={address ? true : false} onClick={checkNeighborhood}>
             동네 인증하기
           </CommonBtn>
         </div>
