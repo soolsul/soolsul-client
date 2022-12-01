@@ -1,27 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CommonButton, CommonWrapper } from '@components/common';
+import { CommonWrapper } from '@components/common';
 import { LoginInput } from '@components/pages/login';
 import { useLogin } from '@hooks/pages/login';
+import useValidation from '@hooks/common/useValidation';
+import CommonBtn from '@components/common/CommonBtn';
+import { useRouter } from 'next/router';
+import wineImg from '@assets/images/wine_horizontal.png';
+import Image from 'next/image';
 
 function Login() {
+  const router = useRouter();
   const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
+  const { checkEmailValidation } = useValidation();
   const { email, password } = loginInfo;
 
-  console.log(Object.values(loginInfo).includes(''));
-
-  const handleClick = () => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     if (Object.values(loginInfo).includes('')) {
       alert('로그인에 필요한 모든 정보를 입력해주세요');
+    } else if (checkEmailValidation(email) === false) {
+      alert('이메일 형식이 잘못되었습니다');
     } else {
       handleLoginSubmit();
     }
   };
 
+  const moveToSignup = () => {
+    router.push('searchAddress');
+  };
+
   return (
     <Wrapper>
-      <LoginContainer>
-        <div className="logoBox">로고 마크</div>
+      <LoginContainer onSubmit={handleSubmit}>
+        <div className="logoBox">
+          <Image src={wineImg} height={'100px'} width={'260px'} />
+        </div>
         <LoginInput
           id="email"
           title={'이메일'}
@@ -40,8 +54,14 @@ function Login() {
           invalidText={''}
           errorPart={'password'}
         />
-        <CommonBtn onClick={handleClick}>로그인</CommonBtn>
+        <div className="buttonBox"></div>
+        <CommonBtn type="submit" onSubmit={handleSubmit}>
+          로그인
+        </CommonBtn>
       </LoginContainer>
+      <CommonBtn onClick={moveToSignup} active={false}>
+        회원가입
+      </CommonBtn>
     </Wrapper>
   );
 }
@@ -50,25 +70,26 @@ export default Login;
 
 const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
-`;
-
-const LoginContainer = styled.div`
-  display: flex;
   height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 16px;
-
-  .logoBox {
-    width: 100%;
-    height: 5rem;
-    background: #cec1f4;
-    text-align: center;
-    margin: 3rem auto;
-  }
+  padding: 20px;
 `;
 
-const CommonBtn = styled(CommonButton)`
-  margin: 3rem auto;
-  width: 100%;
+const LoginContainer = styled.form`
+  .logoBox {
+    text-align: center;
+    margin: 2.5rem auto;
+    border-radius: 20px;
+  }
+
+  Image {
+    border-radius: 20px;
+  }
+
+  .buttonBox {
+    margin: 3rem auto;
+    width: 100%;
+  }
 `;
