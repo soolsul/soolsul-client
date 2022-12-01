@@ -8,10 +8,11 @@ import CommonBtn from '@components/common/CommonBtn';
 import { useRouter } from 'next/router';
 import wineImg from '@assets/images/wine_horizontal.png';
 import Image from 'next/image';
+import { LoadingComponent } from '@components/common/Loading';
 
 function Login() {
   const router = useRouter();
-  const { loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
+  const { isLoading, loginInfo, handleChangeLoginInfo, handleLoginSubmit } = useLogin();
   const { checkEmailValidation } = useValidation();
   const { email, password } = loginInfo;
 
@@ -32,6 +33,7 @@ function Login() {
 
   return (
     <Wrapper>
+      {isLoading && <LoadingComponent />}
       <LoginContainer onSubmit={handleSubmit}>
         <div className="logoBox">
           <Image src={wineImg} height={'100px'} width={'260px'} />
@@ -58,10 +60,10 @@ function Login() {
         <CommonBtn type="submit" onSubmit={handleSubmit}>
           로그인
         </CommonBtn>
-        <CommonBtn onClick={moveToSignup} active={false}>
-          회원가입
-        </CommonBtn>
       </LoginContainer>
+      <CommonBtn onClick={moveToSignup} active={false}>
+        회원가입
+      </CommonBtn>
     </Wrapper>
   );
 }
@@ -70,15 +72,14 @@ export default Login;
 
 const Wrapper = styled(CommonWrapper)`
   background-color: #fff;
-`;
-
-const LoginContainer = styled.form`
-  display: flex;
   height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+`;
 
+const LoginContainer = styled.form`
   .logoBox {
     text-align: center;
     margin: 2.5rem auto;

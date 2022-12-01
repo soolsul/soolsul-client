@@ -8,8 +8,6 @@ import { createBrowserHistory } from 'history';
 import Modal from '@components/common/Modal';
 
 function Signup() {
-  const history = createBrowserHistory();
-
   const { data, hasChanged, invalidText, errorPart, handleSignSubmit, handleInputValue } = useSignup();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +21,8 @@ function Signup() {
   };
 
   useEffect(() => {
+    const history = createBrowserHistory();
+
     const listenBackEvent = () => {
       setIsModalOpen(true);
     };
