@@ -1,11 +1,17 @@
 import { atom } from 'recoil';
 
-const filterAtom = atom({
+interface filterType {
+  isOpen: boolean;
+  moodTag: string;
+  drinkTag: string;
+}
+
+const filterAtom = atom<filterType>({
   key: 'filterAtom',
   default: {
     isOpen: false,
-    moodTag: null,
-    drinkTag: null,
+    moodTag: '',
+    drinkTag: '',
   },
 });
 
