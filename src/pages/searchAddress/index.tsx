@@ -83,7 +83,7 @@ function SearchAddress() {
   }
 
   const checkNeighborhood = async () => {
-    const length = await getPlaceLength();
+    const length = (await getPlaceLength()) as number;
 
     if (length > 6000) {
       alert('검색한 동네가 현재 사용자의 위치와 6km 이상 떨어져 있습니다. 더 가까운 동네를 검색해주세요');
